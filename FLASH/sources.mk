@@ -60,5 +60,11 @@ OBJS_OS_FORMAT :=
 # Every subdirectory with source files must be described here
 SUBDIRS := \
 Sources \
+Sources/UT \
+Sources/Drivers/UART \
+Sources/Drivers/PWM \
+Sources/Drivers/LED \
+Sources/Drivers/HC \
+Sources/Drivers/ADC \
 Project_Settings/Startup_Code \
 

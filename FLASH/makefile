@@ -2,7 +2,7 @@
 # Automatically-generated file. Do not edit!
 ################################################################################
 
-#Progress monitor hint: 5
+#Progress monitor hint: 16
 first : all
 -include ../makefile.init
 
@@ -15,6 +15,12 @@ RM := "$(GNU_Make_Install_DirEnv)/rm" -rf
 -include sources.mk
 -include subdir.mk
 -include Sources/subdir.mk
+-include Sources/UT/subdir.mk
+-include Sources/Drivers/UART/subdir.mk
+-include Sources/Drivers/PWM/subdir.mk
+-include Sources/Drivers/LED/subdir.mk
+-include Sources/Drivers/HC/subdir.mk
+-include Sources/Drivers/ADC/subdir.mk
 -include Project_Settings/Startup_Code/subdir.mk
 -include objects.mk
 
@@ -58,7 +64,7 @@ all: warning-messages explicit-dependencies SumoBOT.elf secondary-outputs
 # Tool invocations
 SumoBOT.elf: $(OBJS) $(USER_OBJS) ../Project_Settings/Linker_Files/MKL25Z128_flash.ld
 	@echo 'Building target: $@'
-	@echo 'Executing target #6 $@'
+	@echo 'Executing target #17 $@'
 	@echo 'Invoking: ARM Ltd Windows GCC C Linker'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc"  $(USER_OBJS_QUOTED) $(LIBS_QUOTED) @"SumoBOT.args" -o"SumoBOT.elf"
 	@echo 'Finished building target: $@'
@@ -66,7 +72,7 @@ SumoBOT.elf: $(OBJS) $(USER_OBJS) ../Project_Settings/Linker_Files/MKL25Z128_fla
 
 # Other Targets
 clean:
-	-$(RM) $(S_DEPS_QUOTED) "./*/*/*.o" "./*/*.o"  $(S_UPPER_DEPS_QUOTED) $(ASM_DEPS_QUOTED) $(ASM_UPPER_DEPS_QUOTED) $(SX_DEPS_QUOTED) $(EXECUTABLES_QUOTED) "./*/*/*.d" "./*/*.d"  $(ProjDirPath)/FLASH/SumoBOT.elf
+	-$(RM) $(S_DEPS_QUOTED) "./*/*/*.o" "./*/*/*/*.o" "./*/*.o"  $(S_UPPER_DEPS_QUOTED) $(ASM_DEPS_QUOTED) $(ASM_UPPER_DEPS_QUOTED) $(SX_DEPS_QUOTED) $(EXECUTABLES_QUOTED) "./*/*/*.d" "./*/*/*/*.d" "./*/*.d"  $(ProjDirPath)/FLASH/SumoBOT.elf
 	-@echo ' '
 
 secondary-outputs:
