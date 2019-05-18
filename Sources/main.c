@@ -28,13 +28,24 @@ int main(void)
 	PWM_init();
 	HC_init();
 	
-	  
-	char c;
+
+	
+	Test();
 	
 	for(;;) {     
 
+
+	}
+	return 0;
+}
+
+void Test()
+{	  
+	char c;
+	for(;;) {     
+
 		UART0_send_string_ln("Select Test:");
-		UART0_send_string_ln("'i': IR \t 'm': MOTORS \t 'u': ULTRASOUND");
+		UART0_send_string_ln("'i': IR \t 'm': MOTORS \t 'u': ULTRASOUND\t 'x': EXIT TESTS");
 		
 		
 		while(!(UART0_S1 & UART0_S1_RDRF_MASK)) { } /* 0x20 wait for receive buffer full */
@@ -59,6 +70,10 @@ int main(void)
 		case 'u':
 			HC_test();
 			break;
+			
+		case 'x':
+			return;
+			break;
 		
 		default:
 			UART0_send_ln();
@@ -69,5 +84,4 @@ int main(void)
 			break;
 		}
 	}
-	return 0;
 }
