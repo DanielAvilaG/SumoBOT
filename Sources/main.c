@@ -24,8 +24,10 @@
 
 void crear_mapa(){
 	int mapa[77][77];
-	for (int y=0;y <= 77;y++)  {
-	        for (int x=0;x <= 77;x++)  {
+	int y=0;
+	int x=0;
+	for (y=0;y <= 77;y++)  {
+	        for (x=0;x <= 77;x++)  {
 	 
 	            if ((int) sqrt (pow(x,2)+pow(y,2)) >= 77/2){//revisar aixo, ho fa malament, pero no veig cap altre manera
 	            	//potser... https://code4run.com/midpoint-circle-algorithm/
