@@ -117,29 +117,6 @@ void combat(){
 	}
 }
 
-
-int main(void)
-{
-
-	ADC0_init_i();
-	RLED_init();
-	GLED_init();
-	BLED_init();
-	UART0_init();
-	PWM_init();
-	HC_init();
-	
-
-	
-	Test();
-	
-	for(;;) {     
-
-
-	}
-	return 0;
-}
-
 void Test()
 {	  
 	char c;
@@ -186,3 +163,27 @@ void Test()
 		}
 	}
 }
+
+int main(void)
+{
+
+	ADC0_init_i();
+	RLED_init();
+	GLED_init();
+	BLED_init();
+	UART0_init();
+	PWM_init();
+	HC_init();
+	
+
+	BLED_on();
+	Test();
+	
+	for(;;) {     
+
+
+	}
+	return 0;
+}
+
+
