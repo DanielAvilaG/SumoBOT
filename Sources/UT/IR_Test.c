@@ -42,12 +42,12 @@ int IR_test(void)
 	UART0_send_char('\t');
 	UART0_send_string("Sensor 3 (PTB3): ");
 	UART0_send_string_ln(buffer);
-	ADC0_read_i(0);
+	ADC0_read_i(11);
 	while(reading){wastedCycles++;};
 	result[4] = res;    
 	itoa(result[4],buffer); 
 	UART0_send_char('\t');
-	UART0_send_string("General (PTE20): ");
+	UART0_send_string("General (PTC2): ");
 	UART0_send_string_ln(buffer);
 	
 	itoa(wastedCycles,buffer);
