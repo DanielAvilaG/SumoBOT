@@ -30,11 +30,12 @@ int PWM_test(void)
 			case 's':
 				PWM_duty(20000,20000);//endarrera
 				break;
-			case 'a':
+			case 'd':
 				PWM_duty(-20000,20000);//dreta
 				break;
 							
 			case 'x':
+				PWM_duty(0,0);//parar
 				return;
 				break;
 			
