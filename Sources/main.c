@@ -17,6 +17,107 @@
 #include "common.h"
 
 
+//Les necesito per combat, no se si es posible tenirles...
+#include <math.h> //arrel cuadrada
+#include <time.h> //random
+#include <stdlib.h> //random
+
+void crear_mapa(){
+	int mapa[77][77];
+	for (int y=0;y <= 77;y++)  {
+	        for (int x=0;x <= 77;x++)  {
+	 
+	            if ((int) sqrt (pow(x,2)+pow(y,2)) >= 77/2){//revisar aixo, ho fa malament, pero no veig cap altre manera
+	            	//potser... https://code4run.com/midpoint-circle-algorithm/
+	            	mapa[x][y] = 0;
+	            }else {
+	            	mapa[x][y] = 1;
+	            }
+	         }
+	     }
+	mapa[77/2][(77/2)+5]=2;
+	mapa[77/2][(77/2)-5]=3;
+}
+
+
+void combat(){
+	int Vx=0, Vy=0, orientacio=90;
+	int gir = 1, MAXGIR=180;//Max Gir hauria de ser el que tarda a girar 120º
+	int random = rand() %6; 
+	int distancia;
+	crear_mapa();
+	char state='s', nextstate='s';
+	srand(time(NULL));
+	delayMs(5000);
+	for(;;) {
+		switch (state){
+			case 's': //Sensing
+				if (cm_PTA5>0||cm_PTC8>0||cm_PTC9>0){
+					//girar per encarar depenen del UC que salti, fer un if de 3
+					//distancia = cm_PT que salti
+					//orientacio= orientacio +- angle!!! 
+					nextstate = 'c';
+				}else{
+					if (gir%2==0){
+						PWM_duty(10000,10000);
+						//orientacio= orientacio +- angle!!!
+						delayMs(gir);
+					}else{
+						PWM_duty(-10000,-10000);
+						//orientacio= orientacio +- angle!!!
+						delayMs(gir);
+					}
+					if (gir <=MAXGIR){
+						gir++;	
+					}else{
+						gir=1;
+					}
+					
+					nextstate='s';
+				}
+				break;
+			case 'c':
+				if (random>2){//endavant
+					PWM_duty(10000,-10000);//espero que sigui endavant XD
+					//cada cm update_mapa();
+					//es pot fer amb una interrupcio? per anar fent sensing... delayMs(distancia/velocitat)
+					//PWM_duty(0,0)
+					
+					nextstate= 's';
+					break;
+				}
+				if (random>4){//dreta (o esquerra, ni idea de com gira 
+					//
+					PWM_duty(10000,10000);//espero que sigui dreta
+					//delayMs(gir 90º);
+					//PWM_duty(10000-angle,-10000);
+					//cada cm update_mapa();
+					//es pot fer amb una interrupcio? per anar fent sensing... delayMs(distancia/velocitat)
+					//PWM_duty(0,0)
+					
+					nextstate= 's';
+					break;
+				} 
+				if (random>6){//l'altre XD 
+					//
+					PWM_duty(-10000,-10000);
+					//delayMs(gir 90º);
+					//PWM_duty(-10000,10000-angle);
+					//cada cm update_mapa();
+					//es pot fer amb una interrupcio? per anar fent sensing... delayMs(distancia/velocitat)
+					//PWM_duty(0,0)
+					
+					nextstate= 's';
+					break;
+				} 
+			default: //per si de cas, torna al estat de sensing si hi ha estat desconegut
+				state='s', nextstate='s';
+		}
+		state = nextstate;
+	}
+}
+
+
 int main(void)
 {
 
