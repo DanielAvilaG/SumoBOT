@@ -18,9 +18,9 @@ void ADC0_init_i(void){
 	
 	// Enable clocks
 	SIM_SCGC6 |= SIM_SCGC6_ADC0_MASK;	// ADC 0 clock
-	SIM_SCGC5 |= SIM_SCGC5_PORTB_MASK;	// PTB0 clock
+	SIM_SCGC5 |= SIM_SCGC5_PORTB_MASK;	// PTB clock
 	//SIM_SCGC5 |= SIM_SCGC5_PORTE_MASK;	// PTB0 clock
-	SIM_SCGC5 |= SIM_SCGC5_PORTC_MASK;	// PTB0 clock
+	SIM_SCGC5 |= SIM_SCGC5_PORTC_MASK;	// PTC clock
 	
 	//Set Inputs (not necessary)
 	PORTB_PCR0 = 0; // PTB0 analog input */
@@ -40,8 +40,8 @@ void ADC0_init_i(void){
 	ADC0_SC2 &= ~0x40; /* software trigger */
 	//ADC0_SC2 |= ADC_SC2_DMAEN_MASK;    // DMA Enable
 	
-	NVIC_BASE_PTR -> ICPR |= 1 << (INT_ADC0 - 16); //Borrar peticiones de interrupción anteriores:
-	NVIC_BASE_PTR -> ISER |= 1 << (INT_ADC0 - 16); //Habilitar la interrupción (activación global, en el NVIC):
+	NVIC_BASE_PTR -> ICPR |= 1 << (INT_ADC0 - 16); //Borrar peticiones de interrupciÃ³n anteriores:
+	NVIC_BASE_PTR -> ISER |= 1 << (INT_ADC0 - 16); //Habilitar la interrupciÃ³n (activaciÃ³n global, en el NVIC):
 }
 
 unsigned short ADC0_read_i(unsigned char ch)
