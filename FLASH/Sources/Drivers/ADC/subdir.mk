@@ -37,7 +37,7 @@ OBJS_OS_FORMAT += \
 # Each subdirectory must supply rules for building sources it contributes
 Sources/Drivers/ADC/ADC_I.o: ../Sources/Drivers/ADC/ADC_I.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #12 $<'
+	@echo 'Executing target #13 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/Drivers/ADC/ADC_I.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/Drivers/ADC/ADC_I.o"
 	@echo 'Finished building: $<'
@@ -45,7 +45,7 @@ Sources/Drivers/ADC/ADC_I.o: ../Sources/Drivers/ADC/ADC_I.c
 
 Sources/Drivers/ADC/ADC_P.o: ../Sources/Drivers/ADC/ADC_P.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #13 $<'
+	@echo 'Executing target #14 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/Drivers/ADC/ADC_P.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/Drivers/ADC/ADC_P.o"
 	@echo 'Finished building: $<'

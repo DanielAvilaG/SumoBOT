@@ -2,7 +2,7 @@
 # Automatically-generated file. Do not edit!
 ################################################################################
 
-#Progress monitor hint: 16
+#Progress monitor hint: 17
 first : all
 -include ../makefile.init
 
@@ -17,6 +17,7 @@ RM := "$(GNU_Make_Install_DirEnv)/rm" -rf
 -include Sources/subdir.mk
 -include Sources/UT/subdir.mk
 -include Sources/Drivers/UART/subdir.mk
+-include Sources/Drivers/TPM0/subdir.mk
 -include Sources/Drivers/PWM/subdir.mk
 -include Sources/Drivers/LED/subdir.mk
 -include Sources/Drivers/HC/subdir.mk
@@ -64,7 +65,7 @@ all: warning-messages explicit-dependencies SumoBOT.elf secondary-outputs
 # Tool invocations
 SumoBOT.elf: $(OBJS) $(USER_OBJS) ../Project_Settings/Linker_Files/MKL25Z128_flash.ld
 	@echo 'Building target: $@'
-	@echo 'Executing target #17 $@'
+	@echo 'Executing target #18 $@'
 	@echo 'Invoking: ARM Ltd Windows GCC C Linker'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc"  $(USER_OBJS_QUOTED) $(LIBS_QUOTED) @"SumoBOT.args" -o"SumoBOT.elf"
 	@echo 'Finished building target: $@'

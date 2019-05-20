@@ -9,6 +9,7 @@
 //#include "Drivers/LED/LED_46.h"
 #include "Drivers/LED/LED_25.h"
 #include "Drivers/PWM/PWM.h"
+#include "Drivers/TPM0/TPM0.h"
 
 #include "UT/IR_Test.h"
 #include "UT/HC_Test.h"
@@ -175,6 +176,7 @@ int main(void)
 	BLED_init();
 	UART0_init();
 	PWM_init();
+	TPM0_init();
 	HC_init();
 	
 
