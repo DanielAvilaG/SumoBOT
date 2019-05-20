@@ -19,30 +19,30 @@ int IR_test(void)
 	result[0] = res;
 	itoa(result[0],buffer); 
 	UART0_send_char('\t');
-	UART0_send_string("Sensor 0 (PTB0): ");
+	UART0_send_string("Sensor 0 (PTB0): "); //Davant dreta
 	UART0_send_string_ln(buffer);
 	ADC0_read_i(9);
 	while(reading){wastedCycles++;};
 	result[1] = res;
 	itoa(result[1],buffer); 
 	UART0_send_char('\t');
-	UART0_send_string("Sensor 1 (PTB1): ");
+	UART0_send_string("Sensor 1 (PTB1): "); //Darrera dreta
 	UART0_send_string_ln(buffer);
 	ADC0_read_i(12);
 	while(reading){wastedCycles++;};
 	result[2] = res;
 	itoa(result[2],buffer); 
 	UART0_send_char('\t');
-	UART0_send_string("Sensor 2 (PTB2): ");
+	UART0_send_string("Sensor 2 (PTB2): "); //Darrera esquerra
 	UART0_send_string_ln(buffer);
-	ADC0_read_i(13);
+	ADC0_read_i(11);
 	while(reading){wastedCycles++;};
 	result[3] = res;
 	itoa(result[3],buffer); 
 	UART0_send_char('\t');
-	UART0_send_string("Sensor 3 (PTB3): ");
+	UART0_send_string("Sensor 3 (PTB3): "); //Davant esquerra
 	UART0_send_string_ln(buffer);
-	ADC0_read_i(11);
+	ADC0_read_i(13);
 	while(reading){wastedCycles++;};
 	result[4] = res;    
 	itoa(result[4],buffer); 
