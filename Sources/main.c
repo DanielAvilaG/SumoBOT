@@ -9,7 +9,6 @@
 //#include "Drivers/LED/LED_46.h"
 #include "Drivers/LED/LED_25.h"
 #include "Drivers/PWM/PWM.h"
-#include "Drivers/TPM0/TPM0.h"
 
 #include "UT/IR_Test.h"
 #include "UT/HC_Test.h"
@@ -27,14 +26,14 @@ void crear_mapa(){
 	int mapa[77][77];
 	int y=0;
 	int x=0;
-	for (y=0;y <= 77;y++)  {
-	        for (x=0;x <= 77;x++)  {
+	for (y=-77/2;y <= 77/2;y++)  {
+	        for (x=-77/2;x <= 77/2;x++)  {
 	 
 	            if ((int) sqrt (pow(x,2)+pow(y,2)) >= 77/2){//revisar aixo, ho fa malament, pero no veig cap altre manera
 	            	//potser... https://code4run.com/midpoint-circle-algorithm/
-	            	mapa[x][y] = 0;
+	            	mapa[x+77/2][y+77/2] = 0;
 	            }else {
-	            	mapa[x][y] = 1;
+	            	mapa[x+77/2][y+77/2] = 1;
 	            }
 	         }
 	     }
@@ -45,7 +44,7 @@ void crear_mapa(){
 
 void combat(){
 	int Vx=0, Vy=0, orientacio=90;
-	int gir = 1, MAXGIR=180;//Max Gir hauria de ser el que tarda a girar 120º
+	int gir = 1, MAXGIR=120;//Max Gir hauria de ser el que tarda a girar 120º
 	int random = rand() %6; 
 	int distancia;
 	crear_mapa();
@@ -56,6 +55,7 @@ void combat(){
 		switch (state){
 			case 's': //Sensing
 				if (cm_PTA5>0||cm_PTC8>0||cm_PTC9>0){
+					//PTA5 davant
 					//girar per encarar depenen del UC que salti, fer un if de 3
 					//distancia = cm_PT que salti
 					//orientacio= orientacio +- angle!!! 
@@ -176,7 +176,6 @@ int main(void)
 	BLED_init();
 	UART0_init();
 	PWM_init();
-	TPM0_init();
 	HC_init();
 	
 
