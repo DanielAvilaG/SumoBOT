@@ -62,7 +62,6 @@ SUBDIRS := \
 Sources \
 Sources/UT \
 Sources/Drivers/UART \
-Sources/Drivers/TPM0 \
 Sources/Drivers/PWM \
 Sources/Drivers/LED \
 Sources/Drivers/HC \
