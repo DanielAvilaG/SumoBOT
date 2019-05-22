@@ -36,6 +36,7 @@ void ADC0_init_p(void)
  
 unsigned short ADC0_read_p(unsigned char ch)
 {
+	
 	ADC0_SC1A = (ch & ADC_SC1_ADCH_MASK);     // Write to SC1A to start conversion
 	while(ADC0_SC2 & ADC_SC2_ADACT_MASK); 	 // Conversion in progress
 	while(!(ADC0_SC1A & ADC_SC1_COCO_MASK)); // Run until the conversion is complete

@@ -56,16 +56,16 @@ int IR_test(void)
 	UART0_send_ln();
 	wastedCycles = 0;
 	
-	if (result[4] > 150) return 1;
+	//if (result[4] > 150) return 1;
 	
-	UART0_send_string_ln("Continus test 600");
+	UART0_send_string_ln("Continus test 400");
 	
-	ADC0_compare_i(13, 600, GT);
+	ADC0_compare_i(13, 400, GT);
 	while(reading){wastedCycles++;};
 	
 	itoa(IR_Data.General,buffer); 
 	UART0_send_char('\t');
-	UART0_send_string("General 600 <= ");
+	UART0_send_string("General 400 <= ");
 	UART0_send_string_ln(buffer);
 	
 	itoa(IR_Data.FrontRight,buffer); 

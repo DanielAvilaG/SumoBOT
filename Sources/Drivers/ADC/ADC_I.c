@@ -12,6 +12,8 @@
 void ADC0_IRQHandler(void){
 	if(compare){
 		IR_Data.General = ADC0_RA;
+		ADC0_SC2 &= ~ADC_SC2_ACFE_MASK; // Disable Compare
+		ADC0_SC3 &= ~ADC_SC3_ADCO_MASK;
 		IR_Data.FrontRight = ADC0_read_p(8);
 		IR_Data.BackRight = ADC0_read_p(9);
 		IR_Data.FrontLeft = ADC0_read_p(11);
@@ -57,7 +59,9 @@ void ADC0_init_i(void){
 unsigned short ADC0_read_i(unsigned char ch)
 {
 	ADC0_SC1A = (ch & ADC_SC1_ADCH_MASK) | 
-				ADC_SC1_AIEN_MASK ;     // 
+				ADC_SC1_AIEN_MASK ;     //
+	
+	//ADC0_SC3 = 0; //Reset continus
 
 	
 	
@@ -69,8 +73,11 @@ unsigned short ADC0_read_i(unsigned char ch)
 }
 
 void ADC0_compare_i(unsigned char ch, uint16_t cv1, unsigned short type){
-	ADC0_SC1A = (ch & ADC_SC1_ADCH_MASK) | ADC_SC1_AIEN_MASK ;
+	
 	ADC0_SC2 |= ADC_SC2_ACFE_MASK;  // Enable compare mode
+	//ADC0_SC2 &= ~ADC_SC2_ADTRG_MASK;
+	ADC0_SC3 |= ADC_SC3_ADCO_MASK;
+	
 	
 	switch(type){
 		case LT:
@@ -87,7 +94,7 @@ void ADC0_compare_i(unsigned char ch, uint16_t cv1, unsigned short type){
 		
 	}
 	
-	
+	ADC0_SC1A = (ch & ADC_SC1_ADCH_MASK) | ADC_SC1_AIEN_MASK ;
 	compare = 1;
 	reading = 1;
 	
