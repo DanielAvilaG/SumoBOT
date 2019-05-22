@@ -37,7 +37,8 @@ void ADC0_init_i(void){
 				  ADC_CFG1_ADIV(1)) ;	// Clock divide by 1 (10-12.5 MHz)
 		
 		
-	ADC0_SC2 &= ~0x40; /* software trigger */
+	ADC0_SC2 &= ~0x40;  /* software trigger */
+	
 	//ADC0_SC2 |= ADC_SC2_DMAEN_MASK;    // DMA Enable
 	
 	NVIC_BASE_PTR -> ICPR |= 1 << (INT_ADC0 - 16); //Borrar peticiones de interrupción anteriores:
@@ -55,4 +56,29 @@ unsigned short ADC0_read_i(unsigned char ch)
 	//while(!(ADC0_SC1A & ADC_SC1_COCO_MASK)); // Run until the conversion is complete
 	reading = 1;
 	return 0;//ADC0_RA;
+}
+
+void ADC0_compare_i(unsigned char ch, uint16_t cv1, unsigned short type){
+	ADC0_SC1A = (ch & ADC_SC1_ADCH_MASK) | ADC_SC1_AIEN_MASK ;
+	ADC0_SC2 |= ADC_SC2_ACFE_MASK;  // Enable compare mode
+	
+	switch(type){
+		case LT:
+			ADC0_CV1 = ADC_CV1_CV(cv1);
+			break;
+		
+		case GT: 
+			ADC0_SC2 |= ADC_SC2_ACFGT_MASK; // Greater than or equal
+			ADC0_CV1 = ADC_CV1_CV(cv1);
+			break;
+		
+		default:
+			break;
+		
+	}
+	
+	
+	compare = 1;
+	
+	
 }

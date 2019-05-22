@@ -10,11 +10,15 @@
 
 #include "derivative.h" /* include peripheral declarations */
 
-unsigned short res, reading;
+#define LT 0
+#define GT 1
+
+unsigned short res, reading, compare;
 
 void ADC0_IRQHandler() __attribute__((interrupt("ADC0_IRQ")));
 void ADC0_init_i(void);
 unsigned short ADC0_read_i(unsigned char ch);
+void ADC0_compare_i(unsigned char ch, uint16_t cv1, unsigned short type);
 
 #endif /* ADC_I_H_ */
 
