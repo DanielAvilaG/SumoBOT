@@ -7,7 +7,6 @@
 "./Sources/Drivers/LED/LED_46.o"
 "./Sources/Drivers/LED/LED_25.o"
 "./Sources/Drivers/PWM/PWM.o"
-"./Sources/Drivers/TPM0/TPM0.o"
 "./Sources/Drivers/UART/UART.o"
 "./Sources/UT/PWM_Test.o"
 "./Sources/UT/IR_Test.o"
@@ -21,10 +20,10 @@
 -g3
 -gdwarf-2
 -gstrict-dwarf
--T"C:/Users/Dani/Documents/UNI/MIP/SumoBOT/Project_Settings/Linker_Files/MKL25Z128_flash.ld"
+-T"C:/Users/PCO/workspace/SumoBOT/Project_Settings/Linker_Files/MKL25Z128_flash.ld"
 -Xlinker
 --gc-sections
--L"D:/Freescale/CW MCU v11.1/MCU/ARM_GCC_Support/ewl/lib/armv6-m"
+-L"C:/Freescale/CW MCU v11.1/MCU/ARM_GCC_Support/ewl/lib/armv6-m"
 -Wl,-Map,SumoBOT.map
 -n
 -specs=ewl_c.specs
