@@ -30,7 +30,7 @@ OBJS_OS_FORMAT += \
 # Each subdirectory must supply rules for building sources it contributes
 Sources/Drivers/HC/HC.o: ../Sources/Drivers/HC/HC.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #11 $<'
+	@echo 'Executing target #12 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/Drivers/HC/HC.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/Drivers/HC/HC.o"
 	@echo 'Finished building: $<'

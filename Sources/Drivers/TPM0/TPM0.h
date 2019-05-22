@@ -8,6 +8,6 @@
 #ifndef TPM0_H_
 #define TPM0_H_
 
-void HC_init(void);
+void TPM0_init(void);
 
 #endif /* TPM0_H_ */

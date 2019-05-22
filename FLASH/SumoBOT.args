@@ -7,6 +7,7 @@
 "./Sources/Drivers/LED/LED_46.o"
 "./Sources/Drivers/LED/LED_25.o"
 "./Sources/Drivers/PWM/PWM.o"
+"./Sources/Drivers/TPM0/TPM0.o"
 "./Sources/Drivers/UART/UART.o"
 "./Sources/UT/PWM_Test.o"
 "./Sources/UT/IR_Test.o"
