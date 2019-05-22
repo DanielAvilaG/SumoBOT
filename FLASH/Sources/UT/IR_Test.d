@@ -19,7 +19,8 @@ Sources/UT/IR_Test.o: ../Sources/UT/IR_Test.c \
  C:/Freescale/CW\ MCU\ v11.1/MCU/ARM_GCC_Support/ewl/EWL_C/include/size_t.h \
  C:/Freescale/CW\ MCU\ v11.1/MCU/ARM_GCC_Support/ewl/EWL_C/include/ewl_rsize_t.h \
  C:/Freescale/CW\ MCU\ v11.1/MCU/ARM_GCC_Support/ewl/EWL_C/include/string_api.h \
- ../Sources/UT/../Drivers/ADC/ADC_I.h
+ ../Sources/UT/../Drivers/ADC/ADC_I.h \
+ ../Sources/UT/../Drivers/ADC/ADC_P.h
 
 C:/Freescale/CW\ MCU\ v11.1/MCU/ARM_GCC_Support/ewl/EWL_C/include/lib_ewl.prefix:
 
@@ -64,3 +65,5 @@ C:/Freescale/CW\ MCU\ v11.1/MCU/ARM_GCC_Support/ewl/EWL_C/include/ewl_rsize_t.h:
 C:/Freescale/CW\ MCU\ v11.1/MCU/ARM_GCC_Support/ewl/EWL_C/include/string_api.h:
 
 ../Sources/UT/../Drivers/ADC/ADC_I.h:
+
+../Sources/UT/../Drivers/ADC/ADC_P.h:

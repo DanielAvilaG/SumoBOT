@@ -10,7 +10,18 @@
 
 
 void ADC0_IRQHandler(void){
-	res = ADC0_RA;
+	if(compare){
+		compare = 0;
+		IR_Data.General = ADC0_RA;
+		ADC0_init_p();
+		IR_Data.FrontRight = ADC0_read_p(8);
+		IR_Data.BackRight = ADC0_read_p(9);
+		IR_Data.FrontLeft = ADC0_read_p(11);
+		IR_Data.BackLeft = ADC0_read_p(12);
+		ADC0_init_i();
+	}else{
+		res = ADC0_RA;
+	}
 	reading = 0;
 }
 
@@ -55,6 +66,7 @@ unsigned short ADC0_read_i(unsigned char ch)
 	//while(ADC0_SC2 & ADC_SC2_ADACT_MASK); 	 // Conversion in progress
 	//while(!(ADC0_SC1A & ADC_SC1_COCO_MASK)); // Run until the conversion is complete
 	reading = 1;
+	compare = 0;
 	return 0;//ADC0_RA;
 }
 
@@ -79,6 +91,6 @@ void ADC0_compare_i(unsigned char ch, uint16_t cv1, unsigned short type){
 	
 	
 	compare = 1;
-	
+	reading = 1;
 	
 }

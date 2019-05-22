@@ -9,11 +9,22 @@
 #define ADC_I_H_
 
 #include "derivative.h" /* include peripheral declarations */
+#include "ADC_P.h"
 
 #define LT 0
 #define GT 1
 
 unsigned short res, reading, compare;
+
+typedef struct IR {
+	short int FrontRight; 
+	short int FrontLeft;
+	short int BackRight;
+	short int BackLeft;
+	short int General;
+} volatile IR;
+
+IR IR_Data;
 
 void ADC0_IRQHandler() __attribute__((interrupt("ADC0_IRQ")));
 void ADC0_init_i(void);

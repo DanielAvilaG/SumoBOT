@@ -54,9 +54,29 @@ int IR_test(void)
 	UART0_send_string("WastedCycles: ");
 	UART0_send_string_ln(buffer);
 	UART0_send_ln();
+	wastedCycles = 0;
 	
 	if (result[4] > 150) return 1;
 	
+	UART0_send_string_ln("Continus test 600");
+	
+	ADC0_compare_i(13, 600, GT);
+	while(reading){wastedCycles++;};
+	
+	itoa(IR_Data.General,buffer); 
+	UART0_send_char('\t');
+	UART0_send_string("General 600 <= ");
+	UART0_send_string_ln(buffer);
+	
+	itoa(IR_Data.FrontRight,buffer); 
+	UART0_send_char('\t');
+	UART0_send_string("Darrera dreta: ");
+	UART0_send_string_ln(buffer);
+	
+	itoa(wastedCycles,buffer);
+	UART0_send_string("WastedCycles: ");
+	UART0_send_string_ln(buffer);
+	UART0_send_ln();
 	
 	
 	return 0;
