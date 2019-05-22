@@ -9,7 +9,6 @@
 //#include "Drivers/LED/LED_46.h"
 #include "Drivers/LED/LED_25.h"
 #include "Drivers/PWM/PWM.h"
-#include "Drivers/TPM0/TPM0.h"
 
 #include "UT/IR_Test.h"
 #include "UT/HC_Test.h"
@@ -156,7 +155,12 @@ void Test()
 		case 'x':
 			return;
 			break;
-		
+			
+		case 'w':
+			UART0_send_string_ln("Pulsar de nuevo para tocar al perrito.");
+			WD_touch(5);
+			break;
+			
 		default:
 			UART0_send_ln();
 			UART0_send_string("\t\033[37;1;5m");
@@ -174,14 +178,13 @@ int main(void)
 	ADC0_init_i();
 	RLED_init();
 	GLED_init();
-	BLED_init();
+	//BLED_init();
 	UART0_init();
 	PWM_init();
-	TPM0_init();
 	HC_init();
-	
+	WD_touch(5);
 
-	BLED_on();
+	//BLED_on();
 	Test();
 	
 	for(;;) {     

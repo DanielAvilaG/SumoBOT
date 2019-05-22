@@ -9,7 +9,17 @@
 
 void RLED_init(void)
 {
-
+	// kl46
+	/*
+	SIM_SCGC5 |= SIM_SCGC5_PORTE_MASK;
+	PORTE_PCR29 = PORT_PCR_MUX(1);     
+	GPIOE_PDDR |= (1 << 29);
+	GPIOE_PSOR |= (1 << 29);
+	*/
+	
+	SIM_SCGC5  |= SIM_SCGC5_PORTB_MASK;               	// enable clock to Port B
+	PORTB_PCR18 = PORT_PCR_MUX(1);						// make PTB18 pin as GPIO
+	GPIOB_PDDR |= (1 << 18);             				// make PTB18 as output pin 
 }
 
 void GLED_init(void)
@@ -27,7 +37,8 @@ void BLED_init(void)
 
 void RLED_toggle(void)
 {
-
+	// GPIOE_PTOR |= (1 << 29); // kl46
+	GPIOB_PTOR |= (1 << 18);
 }
 
 void GLED_toggle(void)

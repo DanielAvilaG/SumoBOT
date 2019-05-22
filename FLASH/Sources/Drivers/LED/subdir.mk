@@ -37,7 +37,7 @@ OBJS_OS_FORMAT += \
 # Each subdirectory must supply rules for building sources it contributes
 Sources/Drivers/LED/LED_25.o: ../Sources/Drivers/LED/LED_25.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #10 $<'
+	@echo 'Executing target #9 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/Drivers/LED/LED_25.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/Drivers/LED/LED_25.o"
 	@echo 'Finished building: $<'
@@ -45,7 +45,7 @@ Sources/Drivers/LED/LED_25.o: ../Sources/Drivers/LED/LED_25.c
 
 Sources/Drivers/LED/LED_46.o: ../Sources/Drivers/LED/LED_46.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #11 $<'
+	@echo 'Executing target #10 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/Drivers/LED/LED_46.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/Drivers/LED/LED_46.o"
 	@echo 'Finished building: $<'
