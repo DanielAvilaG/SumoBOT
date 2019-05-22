@@ -5,3 +5,6 @@
 *.mk
 *.elf
 *.map
+*.apconfig
+*.traceConfig
+*.cproject

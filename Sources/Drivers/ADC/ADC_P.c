@@ -12,13 +12,17 @@ void ADC0_init_p(void)
 	
 	// Enable clocks
 	SIM_SCGC6 |= SIM_SCGC6_ADC0_MASK;	// ADC 0 clock
-	SIM_SCGC5 |= SIM_SCGC5_PORTB_MASK;	// PTB0 clock
+	SIM_SCGC5 |= SIM_SCGC5_PORTB_MASK;	// PTB clock
+	//SIM_SCGC5 |= SIM_SCGC5_PORTE_MASK;	// PTB0 clock
+	SIM_SCGC5 |= SIM_SCGC5_PORTC_MASK;	// PTC clock
 	
 	//Set Inputs (not necessary)
 	PORTB_PCR0 = 0; // PTB0 analog input */
 	PORTB_PCR1 = 0; // PTB1 analog input */
 	PORTB_PCR2 = 0; // PTB2 analog input */
 	PORTB_PCR3 = 0; // PTB3 analog input */
+	//PORTE_PCR20 = 0; // PTB3 analog input */
+	PORTC_PCR2 = 0; // PTB3 analog input */
 
 	// Configure ADC
 	ADC0_CFG1 = 0; // Reset register

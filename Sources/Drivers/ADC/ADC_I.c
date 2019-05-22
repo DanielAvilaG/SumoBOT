@@ -11,14 +11,12 @@
 
 void ADC0_IRQHandler(void){
 	if(compare){
-		compare = 0;
 		IR_Data.General = ADC0_RA;
-		ADC0_init_p();
 		IR_Data.FrontRight = ADC0_read_p(8);
 		IR_Data.BackRight = ADC0_read_p(9);
 		IR_Data.FrontLeft = ADC0_read_p(11);
 		IR_Data.BackLeft = ADC0_read_p(12);
-		ADC0_init_i();
+		compare = 0;
 	}else{
 		res = ADC0_RA;
 	}

@@ -36,7 +36,7 @@ int PWM_test(void)
 							
 			case 'x':
 				PWM_duty(0,0);//parar
-				return;
+				return 0;
 				break;
 			
 			default:
