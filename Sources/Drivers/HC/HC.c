@@ -16,7 +16,7 @@ void HC_init()
 	TPM0_BASE_PTR->SC = 0;
 	TPM0_BASE_PTR->SC |= TPM_SC_PS(1);  // * especificar frequencia
 	TPM0_BASE_PTR->SC |= TPM_SC_CMOD(1);  // COUNTER INC. ON EVERY CLOCK
-	TPM0_BASE_PTR->MOD = 60000;  // * especificar periodo 60 ms
+	TPM0_BASE_PTR->MOD = HC_TPM0_MOD*1000;  // * especificar periodo 60 ms
 	
 	// Clock to PortA and PortC
 	SIM_BASE_PTR->SCGC5 |= SIM_SCGC5_PORTA_MASK | SIM_SCGC5_PORTC_MASK;
@@ -74,4 +74,5 @@ void FTM0_IRQHandler(void) {
 		TPM0_C5SC |= 0x80; // clear CHF
 	}
 }
+
 

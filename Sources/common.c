@@ -31,3 +31,21 @@ void SysTick_Handler(void) {
 	RLED_toggle();
 }
 
+volatile int wd = WD(WD_5S); // 5000/60 = 83.3 --> 83*60=4980 ms
+void TPM0_IRQHandler(void) {
+	if (!wd) {
+		BLED_toggle();
+		wd = WD(WD_5S);
+	}
+	--wd;
+	TPM0_SC |= TPM_SC_TOF_MASK;
+}
+
+/**
+ * Función wathdog, fija a 4,98 segundos; si la cuenta llega 0 sin que se haya vuelto a llamar se ejecuta la 
+ * ISR TPM0_IRQHandler(void)
+ */
+void WD5S_touch()
+{
+	wd = WD(WD_5S);
+}

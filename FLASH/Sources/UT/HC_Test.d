@@ -13,6 +13,7 @@ Sources/UT/HC_Test.o: ../Sources/UT/HC_Test.c \
  D:/Freescale/CW\ MCU\ v11.1/MCU/ARM_GCC_Support/ewl/EWL_C/include/cstdint \
  D:/Freescale/CW\ MCU\ v11.1/MCU/ARM_GCC_Support/ewl/EWL_C/include/limits_api.h \
  D:/Freescale/CW\ MCU\ v11.1/MCU/ARM_GCC_Support/ewl/EWL_C/include/ewl_lib_ext1.h \
+ ../Sources/UT/../Drivers/HC/../../common.h \
  ../Sources/UT/../Drivers/UART/UART.h \
  D:/Freescale/CW\ MCU\ v11.1/MCU/ARM_GCC_Support/ewl/EWL_C/include/string.h \
  D:/Freescale/CW\ MCU\ v11.1/MCU/ARM_GCC_Support/ewl/EWL_C/include/cstring \
@@ -50,6 +51,8 @@ D:/Freescale/CW\ MCU\ v11.1/MCU/ARM_GCC_Support/ewl/EWL_C/include/cstdint:
 D:/Freescale/CW\ MCU\ v11.1/MCU/ARM_GCC_Support/ewl/EWL_C/include/limits_api.h:
 
 D:/Freescale/CW\ MCU\ v11.1/MCU/ARM_GCC_Support/ewl/EWL_C/include/ewl_lib_ext1.h:
+
+../Sources/UT/../Drivers/HC/../../common.h:
 
 ../Sources/UT/../Drivers/UART/UART.h:
 

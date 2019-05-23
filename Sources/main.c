@@ -178,13 +178,13 @@ int main(void)
 	ADC0_init_i();
 	RLED_init();
 	GLED_init();
-	//BLED_init();
+	BLED_init();
 	UART0_init();
 	PWM_init();
 	HC_init();
-	WD_touch(5);
+	WD_touch(10); // Wathdog configurable a 10 s (ejemplo de uso)
 
-	//BLED_on();
+	BLED_on();
 	Test();
 	
 	for(;;) {     
