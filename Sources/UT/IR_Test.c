@@ -70,7 +70,7 @@ int IR_test(void)
 	
 	itoa(IR_Data.FrontRight,buffer); 
 	UART0_send_char('\t');
-	UART0_send_string("Darrera dreta: ");
+	UART0_send_string("Front Right: ");
 	UART0_send_string_ln(buffer);
 	
 	itoa(wastedCycles,buffer);

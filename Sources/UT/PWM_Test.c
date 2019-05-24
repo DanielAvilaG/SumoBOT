@@ -24,7 +24,7 @@ int PWM_test(void)
 				break;
 				
 			case 'a':
-				PWM_duty(20000,-20000);//esquerra
+				PWM_duty(5000,-5000);//esquerra
 				break;
 				
 			case 's':
