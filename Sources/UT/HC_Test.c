@@ -48,7 +48,7 @@ int HC_test(void)
 					UART0_send_string_ln("\033[32mTEST PTC9 OK!!\033[0m");
 				}
 			}
-		} else UART0_send_string_ln("\033[32mTEST PTC9 OK!!\033[0m");
+		} else UART0_send_string_ln("\033[32mTEST PTC9 OK!!\033[0m"); 
 		if ((cm_PTA5 > 1 && cm_PTA5 < 10) || (cm_PTC8 > 1 && cm_PTC8 < 11) || (cm_PTC9 > 1 && cm_PTC9 < 11))
 			BLED_on();
 		else 

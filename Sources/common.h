@@ -18,6 +18,7 @@ void delayMs(int);
 void WD_touch(int);
 void WD5S_touch(void);
 void SysTick_Handler(void);
+int alertstatus;
 
 /** TODO
  * Nil necesita una función que se ejecute cada 5 segundos, que vaya con otra que cuando se llame actue como watchdog reiniciando los 5 segundos

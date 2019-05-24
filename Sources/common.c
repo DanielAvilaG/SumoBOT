@@ -7,6 +7,8 @@
 
 #include "common.h"
 
+
+
 void delayMs(int n) {
 	int i;
 	int j;
@@ -34,9 +36,18 @@ void SysTick_Handler(void) {
 volatile int wd = WD(WD_5S); // 5000/60 = 83.3 --> 83*60=4980 ms
 void TPM0_IRQHandler(void) {
 	if (!wd) {
-		BLED_toggle();
+		alertstatus = 1;
+		PWM_duty(-20000,20000);//dreta
+		delayMs(105);
+		PWM_duty(20000,-20000);//esquerra
+		delayMs(90);
+		PWM_duty(0,0);
 		wd = WD(WD_5S);
+		if (alertstatus!=2){
+			alertstatus = 0;
+		}
 	}
+	
 	--wd;
 	TPM0_SC |= TPM_SC_TOF_MASK;
 }
@@ -49,3 +60,46 @@ void WD5S_touch()
 {
 	wd = WD(WD_5S);
 }
+
+
+/*
+ alertstatus = 2;
+ if ( IR == davant_dreta){
+ 
+ 	 PWM_duty(20000,-20000);
+ 	 while(IR !=davant_esquerra){
+ 	 } 
+ 	 PWM_duty(20000,20000);
+ 	 delayMs(50);
+ 	 PWM_duty(0,0);
+ }else{
+ 	 if ( IR == davant_esquerra){
+ 	 	 PWM_duty(-20000,20000);
+ 	 	 while(IR !=davant_dreta){
+ 	 	 }
+ 	 	 PWM_duty(20000,20000);
+		 delayMs(50);
+		 PWM_duty(0,0); 
+ 	 }else{
+ 	 	 if ( IR == darrera_dreta){
+ 	 	 	 PWM_duty(-20000,20000);
+			 while(IR !=darrera_esquerra){
+			 }
+			 PWM_duty(-20000,-20000);
+			 delayMs(50);
+			 PWM_duty(0,0); 
+ 	 	 }else{
+ 	 	 	 if ( IR == darrera_esquerra){
+				 PWM_duty(20000,-20000);
+				 while(IR !=darrera_dreta){
+				 }
+				 PWM_duty(-20000,-20000);
+				 delayMs(50);
+				 PWM_duty(0,0);
+			}
+ 	 	 }
+ 	 }
+ }
+ WD5S_touch();
+ alertstatus = 0;
+ */
