@@ -6,19 +6,83 @@
  */
 
 #include "ADC_I.h"
-
+#include "../../common.h"
 
 
 void ADC0_IRQHandler(void){
 	if(compare){
+		alertstatus = 2;
+		BLED_toggle();
+		RLED_toggle();
+		GLED_toggle();
 		IR_Data.General = ADC0_RA;
 		ADC0_SC2 &= ~ADC_SC2_ACFE_MASK; // Disable Compare
 		ADC0_SC3 &= ~ADC_SC3_ADCO_MASK;
-		IR_Data.FrontRight = ADC0_read_p(8);
+		/*IR_Data.FrontRight = ADC0_read_p(8);
 		IR_Data.BackRight = ADC0_read_p(9);
 		IR_Data.FrontLeft = ADC0_read_p(11);
-		IR_Data.BackLeft = ADC0_read_p(12);
-		compare = 0;
+		IR_Data.BackLeft = ADC0_read_p(12);*/
+		
+		 if (ADC0_read_p(8)>600){
+		 
+			 PWM_duty(-20000,20000);
+		 	 while(ADC0_read_p(11)>600){
+		 	 } 
+		 	delayMsinter(MOVIMENT);
+		 	 PWM_duty(20000,20000);
+		 	delayMsinter(MOVIMENT);
+		 	PWM_duty(100,100);
+		 	 mapa2.ultimaposicioX = 77/2;
+		 	 mapa2.ultimaposicioY = 77/2+(MOVIMENT*VELOCITAT);
+		 	 orientacio = 90;
+		 	 nextstate="s";
+		 }else{
+		 	 if (ADC0_read_p(11)>600){
+		 	 	 PWM_duty(20000,-20000);
+		 	 	 while(ADC0_read_p(9)>600){
+		 	 	 }
+		 	 	delayMsinter(MOVIMENT);
+		 	 	 PWM_duty(20000,20000);
+		 	 	delayMsinter(MOVIMENT);
+				 PWM_duty(100,100);
+			 	 mapa2.ultimaposicioX = 77/2;
+			 	 mapa2.ultimaposicioY = 77/2+(MOVIMENT*VELOCITAT);
+			 	 orientacio = 90; 
+		 	 }else{
+		 	 	 if (ADC0_read_p(9)>600){
+		 	 	 	 PWM_duty(20000,-20000);
+					 while(ADC0_read_p(12)>600){
+					 }
+					 delayMsinter(MOVIMENT);
+					 PWM_duty(-20000,-20000);
+					 delayMsinter(MOVIMENT);
+					 PWM_duty(100,100); 
+				 	 mapa2.ultimaposicioX = 77/2;
+				 	 mapa2.ultimaposicioY = 77/2+(MOVIMENT*VELOCITAT);
+				 	 orientacio = 90;
+		 	 	 }else{
+		 	 	 	 if ( ADC0_read_p(12)>600){
+		 	 	 		PWM_duty(-20000,20000);
+						 while(ADC0_read_p(9)>600){
+						 }
+						 delayMsinter(MOVIMENT);
+						 PWM_duty(-20000,-20000);
+						 delayMsinter(MOVIMENT);
+						 PWM_duty(100,100);
+					 	 mapa2.ultimaposicioX = 77/2;
+					 	 mapa2.ultimaposicioY = 77/2+(MOVIMENT*VELOCITAT);
+					 	 orientacio = 90;
+					}
+		 	 	 }
+		 	 }
+		 }
+		 WD5S_touch();
+		 alertstatus = 0;
+		 compare = 0;
+		 BLED_toggle();
+		 RLED_toggle();
+		 GLED_toggle();
+		 ADC0_compare_i(13, 600, GT);
 	}else{
 		res = ADC0_RA;
 	}
@@ -58,6 +122,8 @@ void ADC0_init_i(void){
 
 unsigned short ADC0_read_i(unsigned char ch)
 {
+	ADC0_SC2 &= ~ADC_SC2_ACFE_MASK; // Disable Compare
+	ADC0_SC3 &= ~ADC_SC3_ADCO_MASK;
 	ADC0_SC1A = (ch & ADC_SC1_ADCH_MASK) | 
 				ADC_SC1_AIEN_MASK ;     //
 	

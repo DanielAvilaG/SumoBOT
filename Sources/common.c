@@ -8,20 +8,19 @@
 #include "common.h"
 
 
-
 void delayMsinter(int n) {
 	int i;
 	int j;
 	for(i = 0 ; i < n; i++)
-		for (j = 0; j < 7000; j++) {}
+		for (j = 0; j < MSINTER; j++) {}
 }
 
 void delayMs(int n) {
 	int i;
 	//int j;
-	for(i = 0 ; i < n*1000; i++){
+	for(i = 0 ; i < n*MS; i++){
 		if(alertstatus>0){
-			break;
+			return;
 		}
 	}
 		
@@ -42,16 +41,20 @@ void WD_touch(int seconds)
 }
 
 void SysTick_Handler(void) {
+	RLED_toggle();
 	BLED_toggle();
 	if (alertstatus<2){
 		alertstatus = 1;
 		PWM_duty(-20000,20000);//dreta
-		delayMsinter(105);
+		delayMsinter(DELAY90DRETA);
 		PWM_duty(20000,-20000);//esquerra
-		delayMsinter(90);
-		PWM_duty(0,0);
+		delayMsinter(DELAY90ESQUERRA);
+		PWM_duty(100,100);
 		alertstatus = 0;
+		WD_touch(5);
 	}
+	RLED_toggle();
+	BLED_toggle();
 }
 
 volatile int wd = WD(WD_5S); // 5000/60 = 83.3 --> 83*60=4980 ms

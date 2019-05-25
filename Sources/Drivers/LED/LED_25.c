@@ -24,7 +24,8 @@ void RLED_init(void)
 
 void GLED_init(void)
 {
-
+		PORTB_PCR19 = PORT_PCR_MUX(1);						// make PTB18 pin as GPIO
+		GPIOB_PDDR |= (1 << 19);             				// make PTB18 as output pin 
 }
 
 void BLED_init(void)
@@ -43,7 +44,7 @@ void RLED_toggle(void)
 
 void GLED_toggle(void)
 {
-
+	GPIOB_PTOR |= (1 << 19);
 }
 
 void GLED_off(void)
