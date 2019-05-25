@@ -9,6 +9,7 @@
 #define COMMON_H_
 
 #include "MKL25Z4.h"
+#include "Drivers/LED/LED_25.h"
 
 #define HC_TPM0_MOD 60	// ms
 #define WD(ms)	((int)(((int)(ms))/HC_TPM0_MOD))

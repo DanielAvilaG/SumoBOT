@@ -9,11 +9,23 @@
 
 
 
-void delayMs(int n) {
+void delayMsinter(int n) {
 	int i;
 	int j;
 	for(i = 0 ; i < n; i++)
 		for (j = 0; j < 7000; j++) {}
+}
+
+void delayMs(int n) {
+	int i;
+	//int j;
+	for(i = 0 ; i < n*1000; i++){
+		if(alertstatus>0){
+			break;
+		}
+	}
+		
+		//for (j = 0; j < 7000; j++) {}
 }
 /**
  * Función wathdog, cada vez que se llama pone un temporizador durante los segundos
@@ -30,22 +42,33 @@ void WD_touch(int seconds)
 }
 
 void SysTick_Handler(void) {
-	RLED_toggle();
+	BLED_toggle();
+	if (alertstatus<2){
+		alertstatus = 1;
+		PWM_duty(-20000,20000);//dreta
+		delayMsinter(105);
+		PWM_duty(20000,-20000);//esquerra
+		delayMsinter(90);
+		PWM_duty(0,0);
+		alertstatus = 0;
+	}
 }
 
 volatile int wd = WD(WD_5S); // 5000/60 = 83.3 --> 83*60=4980 ms
 void TPM0_IRQHandler(void) {
 	if (!wd) {
-		alertstatus = 1;
-		PWM_duty(-20000,20000);//dreta
-		delayMs(105);
-		PWM_duty(20000,-20000);//esquerra
-		delayMs(90);
-		PWM_duty(0,0);
+		//BLED_toggle();
 		wd = WD(WD_5S);
-		if (alertstatus!=2){
+		/*if (alertstatus!=2){
+			alertstatus = 1;
+			PWM_duty(-20000,20000);//dreta
+			delayMs(105);
+			PWM_duty(20000,-20000);//esquerra
+			delayMs(90);
+			PWM_duty(0,0);
+			wd = WD(WD_5S);
 			alertstatus = 0;
-		}
+		}*/
 	}
 	
 	--wd;

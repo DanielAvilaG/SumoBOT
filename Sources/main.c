@@ -23,7 +23,7 @@
 #include <stdlib.h> //random
 
 struct mapa{
-	int mapa[77][77];
+	char mapa[77][77];
 	int ultimaposicioX;
 	int ultimaposicioY;
 	int ultimaposicioENEX;
@@ -54,6 +54,15 @@ void crear_mapa(){ //Dibuja un circulo de 1's que es el ring. Fuera y el limite 
 }
 
 
+void posicio(double distancia, int orientacio){
+	
+	x = (int)(distancia)*sin((3.1415/180)*(orientacio));
+	y = (int)(distancia)*cos((3.1415/180)*(orientacio));
+	mapa2.ultimaposicioX = x+mapa2.ultimaposicioX;
+	mapa2.ultimaposicioY = y+mapa2.ultimaposicioY;
+}
+
+
 void combat(){
 	int orientacio=90;
 	int gir = 1, MAXGIR=120; //Max Gir es el que tarda a girar 120º
@@ -70,36 +79,72 @@ void combat(){
 					if (cm_PTA5>0||cm_PTC8>0||cm_PTC9>0){
 						if (cm_PTA5<3){ //Davant
 							PWM_duty(-20000,-20000); //Carga cap endavant
-							WD5S_touch();
+							WD_touch(5);
 						}else{
 							if (cm_PTC9<3){ //dreta
 								PWM_duty(-20000,20000);
-								WD5S_touch();
+								WD_touch(5);
 								orientacio = orientacio -120;
 								delayMs(140);
 								PWM_duty(-20000,-20000);
-								WD5S_touch();
+								WD_touch(5);
 
 							}else{
 								if (cm_PTC8<3){ //esquerra
 									PWM_duty(20000,-20000); //esquerra
-									WD5S_touch();
+									WD_touch(5);
 									orientacio = orientacio + 120;
 									delayMs(120);
 									PWM_duty(-20000,-20000);
-									WD5S_touch();
+									WD_touch(5);
 								}else{
 									if (cm_PTA5<cm_PTC8) {
 										if (cm_PTA5<cm_PTC9) {
 											distancia = cm_PTA5;
+											mapa2.mapa[ultimaposicioENEX][ultimaposicioENEY]=1;
+											int eneX = ((int) (distancia)*sin((3.1415/180)*orientacio))+mapa2.ultimaposicioX;
+											int eneY = ((int) (distancia)*cos((3.1415/180)*orientacio))+mapa2.ultimaposicioY;
+											if((eneX<77) && (eneY<77) && (mapa2.mapa[eneX][eneY]>0))
+												{
+													mapa2.ultimaposicioENEX = eneX;
+													mapa2.ultimaposicioENEY = eneY;
+													mapa2.mapa[ultimaposicioENEX][ultimaposicioENEY]=2;
+												}
 										}else{
 											distancia = cm_PTC9;
+											mapa2.mapa[ultimaposicioENEX][ultimaposicioENEY]=1;
+											int eneX = ((int) (distancia)*sin((3.1415/180)*orientacio))+mapa2.ultimaposicioX;
+											int eneY = ((int) (distancia)*cos((3.1415/180)*orientacio))+mapa2.ultimaposicioY;
+											if((eneX<77) && (eneY<77) && (mapa2.mapa[eneX][eneY]>0))
+												{
+													mapa2.ultimaposicioENEX = eneX;
+													mapa2.ultimaposicioENEY = eneY;
+													mapa2.mapa[ultimaposicioENEX][ultimaposicioENEY]=2;
+												}
 										}
 									}else{
 										if (cm_PTC8<cm_PTC9) {
 											distancia = cm_PTC8;
+											mapa2.mapa[ultimaposicioENEX][ultimaposicioENEY]=1;
+											int eneX = ((int) (distancia)*sin((3.1415/180)*orientacio))+mapa2.ultimaposicioX;
+											int eneY = ((int) (distancia)*cos((3.1415/180)*orientacio))+mapa2.ultimaposicioY;
+											if((eneX<77) && (eneY<77) && (mapa2.mapa[eneX][eneY]>0))
+												{
+													mapa2.ultimaposicioENEX = eneX;
+													mapa2.ultimaposicioENEY = eneY;
+													mapa2.mapa[ultimaposicioENEX][ultimaposicioENEY]=2;
+												}
 										}else{
 											distancia = cm_PTC9;
+											mapa2.mapa[ultimaposicioENEX][ultimaposicioENEY]=1;
+											int eneX = ((int) (distancia)*sin((3.1415/180)*orientacio))+mapa2.ultimaposicioX;
+											int eneY = ((int) (distancia)*cos((3.1415/180)*orientacio))+mapa2.ultimaposicioY;
+											if((eneX<77) && (eneY<77) && (mapa2.mapa[eneX][eneY]>0))
+												{
+													mapa2.ultimaposicioENEX = eneX;
+													mapa2.ultimaposicioENEY = eneY;
+													mapa2.mapa[ultimaposicioENEX][ultimaposicioENEY]=2;
+												}
 										}
 									}
 									nextstate = 'c';
@@ -115,13 +160,13 @@ void combat(){
 						if (gir%2==0){ //dreta
 							
 							PWM_duty(-20000,20000); //dreta
-							WD5S_touch();
+							WD_touch(5);
 							orientacio = orientacio - gir; 
 							delayMs(gir*1.1666);
 							PWM_duty(0,0);
 						}else{
 							PWM_duty(20000,-20000); //esquerra
-							WD5S_touch();
+							WD_touch(5);
 							orientacio = orientacio + gir;
 							delayMs(gir);
 							PWM_duty(0,0);
@@ -130,6 +175,9 @@ void combat(){
 							gir++;	
 						}else{
 							gir=1;
+							PWM_duty(-20000,-17500);
+							delayMs(50);
+							posicio(50*0.16, orientacio);
 						}
 						
 						nextstate='s';
@@ -138,28 +186,32 @@ void combat(){
 				case 'c':
 					if (random>2){//endavant
 						PWM_duty(-20000,-17500);//endavant
-						WD5S_touch();
-						delayMs((distancia-3)/16);
-						
+						WD_touch(5);
+						delayMs((distancia-3)/0.16);
+						posicio(distancia-3, orientacio);
 						nextstate= 's';
 						random = rand() %6; 
 						break;
 					}else{
+
+						double x = (distancia/2)*sin((3.1415/180)*orientacio);
+						double y = (distancia/2)*cos((3.1415/180)*orientacio);
 						if (random>4){//dreta
 							
-							double x = (distancia/2)*sin((3.1415/180)*orientacio);
-							double y = (distancia/2)*cos((3.1415/180)*orientacio);
+							x = (distancia/2)*sin((3.1415/180)*(orientacio-90));
+							y = (distancia/2)*cos((3.1415/180)*(orientacio-90));
 							if((x+mapa2.ultimaposicioX<77) && (y+mapa2.ultimaposicioY<77) && (mapa2.mapa[(int)(x+mapa2.ultimaposicioX)][(int)(y+mapa2.ultimaposicioY)]>0))
 							{
 								PWM_duty(-20000,20000);//dreta
-								WD5S_touch();
+								WD_touch(5);
 								delayMs(105);
 								PWM_duty(0,0);
 								orientacio = orientacio -90;
 								PWM_duty(-(((500/9)*(distancia-10))-111.11111),-20000);
-								WD5S_touch();
+								posicio(distancia, orientacio);
+								WD_touch(5);
 								delayMs(2500);
-								WD5S_touch();
+								WD_touch(5);
 								PWM_duty(0,0);
 								
 								
@@ -168,27 +220,28 @@ void combat(){
 								break;
 							}else{
 								PWM_duty(-20000,-17500);//endavant
-								WD5S_touch();
+								WD_touch(5);
 								delayMs((distancia-3)/16);
-								
+								posicio(distancia-3, orientacio);
 								nextstate= 's';
 								random = rand() %6; 
 								break;
 							}
 						} else{//esquerra
-							double x = (distancia/2)*sin((3.1415/180)*(180-orientacio));
-							double y = (distancia/2)*cos((3.1415/180)*(180-orientacio));
+							x = (distancia/2)*sin((3.1415/180)*(orientacio+90));
+							y = (distancia/2)*cos((3.1415/180)*(orientacio+90));
 							if((x+mapa2.ultimaposicioX<77) && (y+mapa2.ultimaposicioY<77) && (mapa2.mapa[(int)(x+mapa2.ultimaposicioX)][(int)(y+mapa2.ultimaposicioY)]>0))
 							{
 								PWM_duty(20000,-20000);//esquerra
-								WD5S_touch();
+								WD_touch(5);
 								delayMs(90);
 								PWM_duty(0,0);
 								orientacio = orientacio +90;
 								PWM_duty(-20000,-(((500/9)*(distancia-10))-111.11111));
-								WD5S_touch();
+								posicio(distancia, orientacio);
+								WD_touch(5);
 								delayMs(2500);
-								WD5S_touch();
+								WD_touch(5);
 								PWM_duty(0,0);
 								
 								
@@ -197,9 +250,9 @@ void combat(){
 								break;
 							} else{
 								PWM_duty(-20000,-17500);//endavant
-								WD5S_touch();
+								WD_touch(5);
 								delayMs((distancia-3)/16);
-								
+								posicio(distancia-3, orientacio);
 								nextstate= 's';
 								random = rand() %6; 
 								break;
@@ -279,10 +332,14 @@ int main(void)
 	UART0_init();
 	PWM_init();
 	HC_init();
-	//WD_touch(10); // Wathdog configurable a 10 s (ejemplo de uso)
+	WD_touch(5); // Wathdog configurable a 10 s (ejemplo de uso)
 	alertstatus = 0;
-	WD5S_touch();
-	BLED_on();
+	//RLED_toggle();
+			
+	//WD5S_touch();
+	Test();
+	
+	//BLED_on();
 	/*
 								//PWM   = distancia(cm)	= temps (s)
 								//-3000 = 66 maxim.		= 4.97
@@ -298,7 +355,7 @@ int main(void)
 								PWM_duty(-20000,-1000);
 								delayMs(1200);
 								PWM_duty(0,0);*/
-	combat();
+	//combat();
 	
 	
 	

@@ -19,7 +19,8 @@ Sources/UT/PWM_Test.o: ../Sources/UT/PWM_Test.c \
  D:/Freescale/CW\ MCU\ v11.1/MCU/ARM_GCC_Support/ewl/EWL_C/include/size_t.h \
  D:/Freescale/CW\ MCU\ v11.1/MCU/ARM_GCC_Support/ewl/EWL_C/include/ewl_rsize_t.h \
  D:/Freescale/CW\ MCU\ v11.1/MCU/ARM_GCC_Support/ewl/EWL_C/include/string_api.h \
- ../Sources/UT/../Drivers/PWM/PWM.h ../Sources/UT/../common.h
+ ../Sources/UT/../Drivers/PWM/PWM.h ../Sources/UT/../common.h \
+ ../Sources/UT/../Drivers/LED/LED_25.h
 
 D:/Freescale/CW\ MCU\ v11.1/MCU/ARM_GCC_Support/ewl/EWL_C/include/lib_ewl.prefix:
 
@@ -66,3 +67,5 @@ D:/Freescale/CW\ MCU\ v11.1/MCU/ARM_GCC_Support/ewl/EWL_C/include/string_api.h:
 ../Sources/UT/../Drivers/PWM/PWM.h:
 
 ../Sources/UT/../common.h:
+
+../Sources/UT/../Drivers/LED/LED_25.h:
