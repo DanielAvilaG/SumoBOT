@@ -23,22 +23,28 @@
 #define DELAY120DRETA 210
 #define MOVIMENT 100
 #define DELAYDEMESDRETA 1.16666
-#define MSPERCM 500/9
-#define MSDEMENYS10 111.11111
-#define MAXGIR 10
+
+
+#define MAXGIR 180
 #define GIRINICIAL 1
+
+
 #define MSINTER 7000
 
+#define IRTHRESHHOLD 300
+#define IRTHRESHHOLDG 200
 
 
 
 //AQUESTS VAN JUNTS, SI MODIFIQUES UN, MODIFICA ELS ALTRES INVERSAMENT (SI INCREMENTES MS EN *3, DIVIDIR CINCSEC EN 3 Y DELAYCERCLE EN 3)
 #define MS 3000 //PER ELS DELAYS DE 90 I 120 TOCAR AQUEST
 #define CINCSEC 1500 
-#define DELAYCERCLE 833
-//AQUESTES DUES VAN JUNTES IGUAL QUE LES ANTERIORS, RELACIONADES AMB MS
-#define ANGLEGIR 10
-#define MSGIR 15
+
+
+
+#define DELAYCERCLE 23.333
+#define MSPERCM 700/9 //gir
+#define MSDEMENYS10 111.11111
 
 
 void delayMs(int);
@@ -48,6 +54,7 @@ void SysTick_Handler(void);
 
 
 volatile int alertstatus;
+volatile int alert;
 volatile int orientacio;
 volatile char state, nextstate;
 

@@ -12,21 +12,22 @@
 void ADC0_IRQHandler(void){
 	if(compare){
 		alertstatus = 2;
+		alert = 2;
 		BLED_toggle();
 		RLED_toggle();
 		GLED_toggle();
 		IR_Data.General = ADC0_RA;
 		ADC0_SC2 &= ~ADC_SC2_ACFE_MASK; // Disable Compare
 		ADC0_SC3 &= ~ADC_SC3_ADCO_MASK;
-		/*IR_Data.FrontRight = ADC0_read_p(8);
+		IR_Data.FrontRight = ADC0_read_p(8);
 		IR_Data.BackRight = ADC0_read_p(9);
 		IR_Data.FrontLeft = ADC0_read_p(11);
-		IR_Data.BackLeft = ADC0_read_p(12);*/
+		IR_Data.BackLeft = ADC0_read_p(12);
 		
-		 if (ADC0_read_p(8)>600){
+		 if (ADC0_read_p(8)>IRTHRESHHOLD){
 		 
 			 PWM_duty(-20000,20000);
-		 	 while(ADC0_read_p(11)>600){
+		 	 while(ADC0_read_p(11)>IRTHRESHHOLD){
 		 	 } 
 		 	delayMsinter(MOVIMENT);
 		 	 PWM_duty(20000,20000);
@@ -34,12 +35,12 @@ void ADC0_IRQHandler(void){
 		 	PWM_duty(100,100);
 		 	 mapa2.ultimaposicioX = 77/2;
 		 	 mapa2.ultimaposicioY = 77/2+(MOVIMENT*VELOCITAT);
-		 	 orientacio = 90;
+		 	 orientacio = 210;
 		 	 nextstate="s";
 		 }else{
-		 	 if (ADC0_read_p(11)>600){
+		 	 if (ADC0_read_p(11)>IRTHRESHHOLD){
 		 	 	 PWM_duty(20000,-20000);
-		 	 	 while(ADC0_read_p(9)>600){
+		 	 	 while(ADC0_read_p(9)>IRTHRESHHOLD){
 		 	 	 }
 		 	 	delayMsinter(MOVIMENT);
 		 	 	 PWM_duty(20000,20000);
@@ -47,11 +48,11 @@ void ADC0_IRQHandler(void){
 				 PWM_duty(100,100);
 			 	 mapa2.ultimaposicioX = 77/2;
 			 	 mapa2.ultimaposicioY = 77/2+(MOVIMENT*VELOCITAT);
-			 	 orientacio = 90; 
+			 	 orientacio = 210; 
 		 	 }else{
-		 	 	 if (ADC0_read_p(9)>600){
+		 	 	 if (ADC0_read_p(9)>IRTHRESHHOLD){
 		 	 	 	 PWM_duty(20000,-20000);
-					 while(ADC0_read_p(12)>600){
+					 while(ADC0_read_p(12)>IRTHRESHHOLD){
 					 }
 					 delayMsinter(MOVIMENT);
 					 PWM_duty(-20000,-20000);
@@ -61,9 +62,9 @@ void ADC0_IRQHandler(void){
 				 	 mapa2.ultimaposicioY = 77/2+(MOVIMENT*VELOCITAT);
 				 	 orientacio = 90;
 		 	 	 }else{
-		 	 	 	 if ( ADC0_read_p(12)>600){
+		 	 	 	 if ( ADC0_read_p(12)>IRTHRESHHOLD){
 		 	 	 		PWM_duty(-20000,20000);
-						 while(ADC0_read_p(9)>600){
+						 while(ADC0_read_p(9)>IRTHRESHHOLD){
 						 }
 						 delayMsinter(MOVIMENT);
 						 PWM_duty(-20000,-20000);
@@ -79,10 +80,12 @@ void ADC0_IRQHandler(void){
 		 WD5S_touch();
 		 alertstatus = 0;
 		 compare = 0;
+		 nextstate="s";
+		 state="s";
 		 BLED_toggle();
 		 RLED_toggle();
 		 GLED_toggle();
-		 ADC0_compare_i(13, 600, GT);
+		 ADC0_compare_i(13, IRTHRESHHOLDG, GT);
 	}else{
 		res = ADC0_RA;
 	}

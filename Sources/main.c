@@ -20,8 +20,8 @@
 
 //Les necesito per combat, no se si es posible tenirles...
 #include <math.h> //arrel cuadrada
-#include <time.h> //random
-#include <stdlib.h> //random
+//#include <time.h> //random
+//#include <stdlib.h> //random
 
 void ajustarangledreta(){
 	PWM_duty(-20000,20000);
@@ -43,7 +43,7 @@ void ajustarcercledreta(int distancia){
 	PWM_duty(-(((MSPERCM)*(distancia-10))-MSDEMENYS10),-20000);
 	posicio(distancia, orientacio);
 	orientacio = 170;
-	delayMs(DELAYCERCLE);
+	delayMs(DELAYCERCLE*distancia);
 	PWM_duty(100,100);
 }
 
@@ -83,15 +83,14 @@ void combat(){
 	orientacio=90;
 	char buffer[20];
 	int gir = GIRINICIAL;
-	srand(gir);
-	int random = rand() %6; 
+	int random = 1; 
 	double distancia = -1;
 	crear_mapa();
 	state='s', nextstate='s';
 	WD_touch(5);
 	
 	
-	ADC0_compare_i(13, 400, GT);
+	ADC0_compare_i(13, IRTHRESHHOLDG, GT);
 	
 	
 	for(;;) {
@@ -108,8 +107,8 @@ void combat(){
 						}else{
 							if (cm_PTC9<5){ //dreta
 								//GLED_toggle();
-								//sprintf(buffer,"HC dreta menor 5: %d", cm_PTC9);
-								//UART0_send_string_ln(buffer);
+								sprintf(buffer,"HC dreta menor 5: %d", cm_PTC9);
+								UART0_send_string_ln(buffer);
 								PWM_duty(-20000,20000);
 								WD_touch(5);
 								orientacio = orientacio -120;
@@ -119,8 +118,8 @@ void combat(){
 							}else{
 								if (cm_PTC8<5){ //esquerra
 									//GLED_toggle();
-									//sprintf(buffer,"HC esquerra menor 5: %d", cm_PTC8);
-									//UART0_send_string_ln(buffer);
+									sprintf(buffer,"HC esquerra menor 5: %d", cm_PTC8);
+									UART0_send_string_ln(buffer);
 									PWM_duty(20000,-20000); //esquerra
 									WD_touch(5);
 									orientacio = orientacio + 120;
@@ -132,14 +131,16 @@ void combat(){
 									
 									if (cm_PTA5<cm_PTC8) {
 										if (cm_PTA5<cm_PTC9) {
-											//	sprintf(buffer,"HC davant: %d", cm_PTA5);
-											//UART0_send_string_ln(buffer);
+											sprintf(buffer,"HC davant: %d", cm_PTA5);
+											UART0_send_string_ln(buffer);
+											random++;
 											distancia = cm_PTA5;
 											mapa2.mapa[mapa2.ultimaposicioENEX][mapa2.ultimaposicioENEY]=1;
 											int eneX = ((int) (distancia)*sin((3.1415/180)*orientacio))+mapa2.ultimaposicioX;
 											int eneY = ((int) (distancia)*cos((3.1415/180)*orientacio))+mapa2.ultimaposicioY;
-											if((eneX<77) && (eneY<77) && (mapa2.mapa[eneX][eneY]>0))
-												{
+											if((eneX<77) && (eneY<77))
+											{
+												if (mapa2.mapa[eneX][eneY]>0){
 												//	sprintf(buffer,"HC davant dins mapa: %d", cm_PTA5);
 												//UART0_send_string_ln(buffer);
 													mapa2.ultimaposicioENEX = eneX;
@@ -148,15 +149,18 @@ void combat(){
 												}else{
 													distancia = -1;
 												} 
+											}
 										}else{
 											distancia = cm_PTC9;
 											//sprintf(buffer,"HC dreta: %d", cm_PTC9);
 											//UART0_send_string_ln(buffer);
+											random++;
 											mapa2.mapa[mapa2.ultimaposicioENEX][mapa2.ultimaposicioENEY]=1;
 											int eneX = ((int) (distancia)*sin((3.1415/180)*orientacio))+mapa2.ultimaposicioX;
 											int eneY = ((int) (distancia)*cos((3.1415/180)*orientacio))+mapa2.ultimaposicioY;
-											if((eneX<77) && (eneY<77) && (mapa2.mapa[eneX][eneY]>0))
+											if((eneX<77) && (eneY<77))
 												{
+												if (mapa2.mapa[eneX][eneY]>0){
 													sprintf(buffer,"HC dreta dins mapa: %d", cm_PTC9);
 													UART0_send_string_ln(buffer);
 													mapa2.ultimaposicioENEX = eneX;
@@ -169,19 +173,22 @@ void combat(){
 												}else{
 													distancia = -1;
 												} 
+												}
 										}
 									}else{
 										if (cm_PTC8<cm_PTC9) {
 											distancia = cm_PTC8;
-											//sprintf(buffer,"HC esquerra: %d", cm_PTC8);
-											//UART0_send_string_ln(buffer);
+											sprintf(buffer,"HC esquerra: %d", cm_PTC8);
+											UART0_send_string_ln(buffer);
+											random++;
 											mapa2.mapa[mapa2.ultimaposicioENEX][mapa2.ultimaposicioENEY]=1;
 											int eneX = ((int) (distancia)*sin((3.1415/180)*orientacio))+mapa2.ultimaposicioX;
 											int eneY = ((int) (distancia)*cos((3.1415/180)*orientacio))+mapa2.ultimaposicioY;
-											if((eneX<77) && (eneY<77) && (mapa2.mapa[eneX][eneY]>0))
+											if((eneX<77) && (eneY<77))
 												{
-												//sprintf(buffer,"HC esquerra dins mapa: %d", cm_PTC8);
-													//	UART0_send_string_ln(buffer);
+												if (mapa2.mapa[eneX][eneY]>0){
+													sprintf(buffer,"HC esquerra dins mapa: %d", cm_PTC8);
+													UART0_send_string_ln(buffer);
 													mapa2.ultimaposicioENEX = eneX;
 													mapa2.ultimaposicioENEY = eneY;
 													mapa2.mapa[mapa2.ultimaposicioENEX][mapa2.ultimaposicioENEY]=2;
@@ -192,17 +199,20 @@ void combat(){
 												}else{
 													distancia = -1;
 												} 
+												}
 										}else{
 											distancia = cm_PTC9;
-											//sprintf(buffer,"HC dreta: %d", cm_PTC9);
-											//UART0_send_string_ln(buffer);
+											sprintf(buffer,"HC dreta: %d", cm_PTC9);
+											UART0_send_string_ln(buffer);
+											random++;
 											mapa2.mapa[mapa2.ultimaposicioENEX][mapa2.ultimaposicioENEY]=1;
 											int eneX = ((int) (distancia)*sin((3.1415/180)*orientacio))+mapa2.ultimaposicioX;
 											int eneY = ((int) (distancia)*cos((3.1415/180)*orientacio))+mapa2.ultimaposicioY;
-											if((eneX<77) && (eneY<77) && (mapa2.mapa[eneX][eneY]>0))
+											if((eneX<77) && (eneY<77))
 												{
-												//	sprintf(buffer,"HC dreta dins mapa: %d", cm_PTC9);
-												//UART0_send_string_ln(buffer);
+												if (mapa2.mapa[eneX][eneY]>0){
+													sprintf(buffer,"HC dreta dins mapa: %d", cm_PTC9);
+													UART0_send_string_ln(buffer);
 													mapa2.ultimaposicioENEX = eneX;
 													mapa2.ultimaposicioENEY = eneY;
 													mapa2.mapa[mapa2.ultimaposicioENEX][mapa2.ultimaposicioENEY]=2;
@@ -213,11 +223,12 @@ void combat(){
 												}else{
 													distancia = -1;
 												} 
+												}
 										}
 									}
 									if (distancia>5){
-										//sprintf(buffer,"Distancia fora del mapa: %d", distancia);
-										//UART0_send_string_ln(buffer);
+										sprintf(buffer,"Distancia fora del mapa: %d", distancia);
+										UART0_send_string_ln(buffer);
 										nextstate = 'c';
 										break;
 									}else{
@@ -237,18 +248,21 @@ void combat(){
 						//orientacio= orientacio +- angle!!! 
 						
 					}else{
+						//RLED_toggle();
 						if (gir%2==0){ //dreta
 							
 							PWM_duty(-20000,20000); //dreta
 							WD_touch(5);
-							orientacio = orientacio - ANGLEGIR; 
-							delayMs(MSGIR);
+							orientacio = orientacio - gir; 
+							delayMs(gir/120*DELAY120DRETA);
 						}else{
 							PWM_duty(20000,-20000); //esquerra
 							WD_touch(5);
-							orientacio = orientacio + ANGLEGIR;
-							delayMs(MSGIR);
+							orientacio = orientacio + gir;
+							delayMs(gir/120*DELAY120ESQUERRA);
 						}
+
+						nextstate='s';
 						break;
 						if (gir <=MAXGIR){
 							gir= gir + 1;	
@@ -258,12 +272,21 @@ void combat(){
 							delayMs(MOVIMENT);
 							posicio(MOVIMENT*VELOCITAT, orientacio);
 						}
-						break;
 						nextstate='s';
+
+							//RLED_toggle();
+						break;
+						
 					}
-					break;
+
 					nextstate='s';
+
+					//RLED_toggle();
+					break;
 				case 'c':
+					GLED_toggle();
+					random= random%6;
+					
 					//GLED_toggle();
 					PWM_duty(-20000,-17500);//endavant
 					WD_touch(5);
@@ -271,16 +294,18 @@ void combat(){
 					posicio(distancia-3, orientacio);
 					nextstate= 's';
 					random = rand() %6; 
+					GLED_toggle();
 					break;
-					
-					/*
+				
+					/*    
 					if (random>2){//endavant
 						PWM_duty(-20000,-17500);//endavant
 						WD_touch(5);
 						delayMs((distancia-3)/VELOCITAT);
 						posicio(distancia-3, orientacio);
 						nextstate= 's';
-						random = rand() %6; 
+						random = 0; 
+						GLED_toggle();
 						break;
 					}else{
 
@@ -300,13 +325,14 @@ void combat(){
 								posicio(distancia, orientacio);
 								orientacio = 170;
 								WD_touch(5);
-								delayMs(DELAYCERCLE);
+								delayMs(DELAYCERCLE*distancia);
 								WD_touch(5);
 								PWM_duty(100,100);
 								
 								
 								nextstate= 's';
-								random = rand() %6; 
+								random = 0; 
+								GLED_toggle();
 								break;
 							}else{
 								PWM_duty(-20000,-17500);//endavant
@@ -314,7 +340,8 @@ void combat(){
 								delayMs((distancia-3)/VELOCITAT);
 								posicio(distancia-3, orientacio);
 								nextstate= 's';
-								random = rand() %6; 
+								random = 0; 
+								GLED_toggle();
 								break;
 							}
 						} else{// gir per la esquerra
@@ -330,13 +357,14 @@ void combat(){
 								posicio(distancia, orientacio);
 								orientacio = 10;
 								WD_touch(5);
-								delayMs(DELAYCERCLE);
+								delayMs(DELAYCERCLE*distancia);
 								WD_touch(5);
 								PWM_duty(100,100);
 								
 								
 								nextstate= 's';
-								random = rand() %6; 
+								random = 0; 
+								GLED_toggle();
 								break;
 							} else{
 								PWM_duty(-20000,-17500);//endavant
@@ -344,13 +372,14 @@ void combat(){
 								delayMs((distancia-3)/VELOCITAT);
 								posicio(distancia-3, orientacio);
 								nextstate= 's';
-								random = rand() %6; 
+								random = 0; 
+								GLED_toggle();
 								break;
 							}
 						}
 						
 					}
-					
+					/*
 					*/
 					
 					 
@@ -432,7 +461,7 @@ int main(void)
 	RLED_toggle();
 	//GLED_toggle();
 	//WD5S_touch();
-	//Test();
+	Test();
 	//WD_touch(5);
 	
 	
@@ -464,7 +493,7 @@ int main(void)
 	
 	//ajustarangledreta();
 	//ajustarangleesquerra();	
-	//ajustarcercledreta(30);
+	//ajustarcercledreta(40);
 	//ADC0_compare_i(13, 400, GT);
 	
 	for(;;) {     

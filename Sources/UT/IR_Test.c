@@ -5,6 +5,7 @@
  *      Author: PCO
  */
 #include "IR_Test.h"
+#include "../common.h"
 
 int IR_test(void)
 {
@@ -58,9 +59,9 @@ int IR_test(void)
 	
 	//if (result[4] > 150) return 1;
 	
-	UART0_send_string_ln("Continus test 400");
+	UART0_send_string_ln("Continus test 200");
 	
-	ADC0_compare_i(13, 400, GT);
+	ADC0_compare_i(13, IRTHRESHHOLDG, GT);
 	while(reading){wastedCycles++;};
 	
 	itoa(IR_Data.General,buffer); 
@@ -72,6 +73,21 @@ int IR_test(void)
 	UART0_send_char('\t');
 	UART0_send_string("Front Right: ");
 	UART0_send_string_ln(buffer);
+	
+	itoa(IR_Data.BackRight,buffer); 
+		UART0_send_char('\t');
+		UART0_send_string("BackRight: ");
+		UART0_send_string_ln(buffer);
+		
+		itoa(IR_Data.FrontLeft,buffer); 
+			UART0_send_char('\t');
+			UART0_send_string("FrontLeft: ");
+			UART0_send_string_ln(buffer);
+			
+			itoa(IR_Data.BackLeft,buffer); 
+				UART0_send_char('\t');
+				UART0_send_string("BackLeft: ");
+				UART0_send_string_ln(buffer);
 	
 	itoa(wastedCycles,buffer);
 	UART0_send_string("WastedCycles: ");

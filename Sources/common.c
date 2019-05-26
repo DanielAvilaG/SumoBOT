@@ -45,12 +45,14 @@ void SysTick_Handler(void) {
 	BLED_toggle();
 	if (alertstatus<2){
 		alertstatus = 1;
+		alert = 1;
 		PWM_duty(-20000,20000);//dreta
 		delayMsinter(DELAY90DRETA);
 		PWM_duty(20000,-20000);//esquerra
 		delayMsinter(DELAY90ESQUERRA);
 		PWM_duty(100,100);
 		alertstatus = 0;
+		alert = 0;
 		WD_touch(5);
 	}
 	RLED_toggle();
