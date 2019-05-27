@@ -97,7 +97,8 @@ void Test()
 
 int main(void)
 {
-	ADC0_init_i();
+	//ADC0_init_i();
+	ADC0_init_p();
 	RLED_init();
 	GLED_init();
 	BLED_init();
@@ -113,10 +114,10 @@ int main(void)
 	GLED_on();
 	//WD5S_touch();
 	//PWM_duty(ROTATION, -ROTATION); // Izq
-	/*BLED_toggle();
-	SysTick_delay(5000);
-	BLED_toggle();*/
-	ADC0_compare_i(13, IRTHRESHHOLDG, GT);
+	//BLED_toggle();
+	//SysTick_delay(10000);
+	//BLED_toggle();
+	//ADC0_compare_i(13, IRTHRESHHOLDG, GT);
 	Test();
 	//WD5S();
 	//delayMs(CINCSEC);

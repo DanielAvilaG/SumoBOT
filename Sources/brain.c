@@ -19,12 +19,67 @@ void brain()
 	}
 }
 
+char IR_gen(){
+	char buffer[30];
+	if (ADC0_read_p(13)> IRTHRESHHOLDG){
+		IR_Data.FrontRight = ADC0_read_p(8);
+		IR_Data.BackRight = ADC0_read_p(9);
+		IR_Data.FrontLeft = ADC0_read_p(11);
+		IR_Data.BackLeft = ADC0_read_p(12);
+		if (IR_Data.FrontRight > IRTHRESHHOLD) {
+			PWM_moveBackward(10, 1);
+			PWM_rotateLeft(45);
+			//SysTick_delay(50);
+			itoa(IR_Data.FrontRight,buffer); 
+			UART0_send_char('\t');
+			UART0_send_string("IR_Data.FrontRight: "); 
+			UART0_send_string_ln(buffer);
+
+		}
+		else if (IR_Data.FrontLeft > IRTHRESHHOLD) {
+			PWM_moveBackward(10, 1);
+			PWM_rotateRight(45);
+			//SysTick_delay(50);
+			itoa(IR_Data.FrontLeft,buffer); 
+			UART0_send_char('\t');
+			UART0_send_string("IR_Data.FrontLeft: "); 
+			UART0_send_string_ln(buffer);
+
+		}
+		else if (IR_Data.BackRight > IRTHRESHHOLD) {
+			PWM_moveForward(10, 1);
+			PWM_rotateLeft(45);
+			//SysTick_delay(50);
+			itoa(IR_Data.BackRight,buffer); 
+			UART0_send_char('\t');
+			UART0_send_string("IR_Data.BackRight: "); 
+			UART0_send_string_ln(buffer);
+
+		}
+		else if (IR_Data.BackLeft > IRTHRESHHOLD) {
+			PWM_moveForward(10, 1);
+			PWM_rotateRight(45);
+			//SysTick_delay(50);
+			itoa(IR_Data.BackLeft,buffer); 
+			UART0_send_char('\t');
+			UART0_send_string("IR_Data.BackLeft: "); 
+			UART0_send_string_ln(buffer);
+
+		}
+		return 1;
+	} 
+	return 0;
+}
+
+
+
+
 void brain_step()
 {
 	char buffer[20];
 	int gir = 0;//GIRINICIAL;
 	int cm_Front, cm_Left, cm_Right;
-	ADC0_compare_i(13, IRTHRESHHOLDG, GT);
+	//ADC0_compare_i(13, IRTHRESHHOLDG, GT);
 	switch (currentState)
 	{
 	case INIT:
@@ -130,7 +185,7 @@ void brain_step()
 		break;
 	}
 
-	//SysTick_delay(100);
+	SysTick_delay(100);
 }
 
 void brain_forward()

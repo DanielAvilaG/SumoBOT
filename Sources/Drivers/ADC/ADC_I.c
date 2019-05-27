@@ -30,7 +30,7 @@ void ADC0_IRQHandler1(void) {
 }
 
 
-void ADC0_IRQHandler(void) {
+void ADC0_IRQHandler2(void) {
 	if (compare) {
 		char buffer[30];
 		alertstatus = 2;
@@ -115,7 +115,47 @@ void ADC0_IRQHandler(void) {
 	}
 	reading = 0;
 }
-
+void ADC0_IRQHandler(void) {
+	if (compare) {
+		char buffer[30];
+		alertstatus = 2;
+		alert = 2;
+		BLED_on();
+		RLED_on();
+		GLED_on();
+		IR_Data.General = ADC0_RA;
+		IR_Data.FrontRight = 0;
+		IR_Data.BackRight = 0;
+		IR_Data.FrontLeft = 0;
+		IR_Data.BackLeft = 0;
+		ADC0_SC2 &= ~ADC_SC2_ACFE_MASK; // Disable Compare
+		ADC0_SC3 &= ~ADC_SC3_ADCO_MASK;
+		ADC0_SC1A&= ~ADC_SC1_AIEN_MASK;
+		//IR_Data.FrontRight = ADC0_read_p(8);
+		//IR_Data.BackRight = ADC0_read_p(9);
+		//IR_Data.FrontLeft = ADC0_read_p(11);
+		//IR_Data.BackLeft = ADC0_read_p(12);
+		//PWM_duty(10000, 10000);
+		IR_Data.FrontRight = ADC0_read_p(8);
+		IR_Data.BackRight = ADC0_read_p(9);
+		IR_Data.FrontLeft = ADC0_read_p(11);
+		IR_Data.BackLeft = ADC0_read_p(12);
+		
+		//SysTick_delay(100);
+		
+		//WD5S();
+		alertstatus = 0;
+		compare = 0;
+		ADC0_compare_i(13, IRTHRESHHOLDG, GT);
+		BLED_off();
+		RLED_off();
+		GLED_off();
+	}
+	else {
+		res = ADC0_RA;
+	}
+	reading = 0;
+}
 
 void ADC0_IRQHandler4(void) {
 	if (compare) {

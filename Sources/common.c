@@ -40,7 +40,6 @@ void delayMS(int n) {
 }
 
 
-
 void SysTick_delay(int ms)
 {
 	SYST_CSR = 0; // Disable Systick
@@ -49,7 +48,56 @@ void SysTick_delay(int ms)
 	SYST_RVR = (1310*ms)-1; 
 	//SYST_CSR = 3; // Enable Systick, Clock Source 20.97/16 = 1310625 Hz, Enable Interrupts
 	SYST_CSR = 1; // Enable Systick, Clock Source 20.97/16 = 1310625 Hz, NO Interrupts
-	while(!(SYST_CSR & 0x10000)); /*wait until the Count flag is set */
+	char buffer[30];
+	while(!(SYST_CSR & 0x10000)){
+		if (ADC0_read_p(13)> IRTHRESHHOLDG){
+				IR_Data.FrontRight = ADC0_read_p(8);
+				IR_Data.BackRight = ADC0_read_p(9);
+				IR_Data.FrontLeft = ADC0_read_p(11);
+				IR_Data.BackLeft = ADC0_read_p(12);
+				if (IR_Data.FrontRight > IRTHRESHHOLD) {
+					PWM_moveBackward(10, 0);
+					//PWM_rotateLeft(45);
+					//SysTick_delay(50);
+					itoa(IR_Data.FrontRight,buffer); 
+					UART0_send_char('\t');
+					UART0_send_string("IR_Data.FrontRight: "); 
+					UART0_send_string_ln(buffer);
+
+				}
+				else if (IR_Data.FrontLeft > IRTHRESHHOLD) {
+					PWM_moveBackward(10, 0);
+					//PWM_rotateRight(45);
+					//SysTick_delay(50);
+					itoa(IR_Data.FrontLeft,buffer); 
+					UART0_send_char('\t');
+					UART0_send_string("IR_Data.FrontLeft: "); 
+					UART0_send_string_ln(buffer);
+
+				}
+				else if (IR_Data.BackRight > IRTHRESHHOLD) {
+					PWM_moveForward(10, 0);
+					//PWM_rotateLeft(45);
+					//SysTick_delay(50);
+					itoa(IR_Data.BackRight,buffer); 
+					UART0_send_char('\t');
+					UART0_send_string("IR_Data.BackRight: "); 
+					UART0_send_string_ln(buffer);
+
+				}
+				else if (IR_Data.BackLeft > IRTHRESHHOLD) {
+					PWM_moveForward(10, 0);
+					//PWM_rotateRight(45);
+					//SysTick_delay(50);
+					itoa(IR_Data.BackLeft,buffer); 
+					UART0_send_char('\t');
+					UART0_send_string("IR_Data.BackLeft: "); 
+					UART0_send_string_ln(buffer);
+
+				}
+			}
+	}/*wait until the Count flag is set */
+
 	SYST_CSR = 0; /*Stop the timer (Enable = 0) */
 }
 

@@ -14,7 +14,7 @@ int IR_test(void)
 	char buffer[30];
 	
 	UART0_send_string_ln("Start IR test:");
-	
+	/*
 	ADC0_read_i(8);
 	while(reading){wastedCycles++;};
 	result[0] = res;
@@ -56,13 +56,18 @@ int IR_test(void)
 	UART0_send_string_ln(buffer);
 	UART0_send_ln();
 	wastedCycles = 0;
-	
+	*/
 	//if (result[4] > 150) return 1;
-	/*
+	
 	UART0_send_string_ln("Continus test 200");
 	
-	ADC0_compare_i(13, IRTHRESHHOLDG, GT);
+	//ADC0_compare_i(13, IRTHRESHHOLDG, GT);
 	while(reading){wastedCycles++;};
+	
+	IR_Data.FrontRight = ADC0_read_p(8);
+	IR_Data.BackRight = ADC0_read_p(9);
+	IR_Data.FrontLeft = ADC0_read_p(11);
+	IR_Data.BackLeft = ADC0_read_p(12);
 	
 	itoa(IR_Data.General,buffer); 
 	UART0_send_char('\t');
@@ -93,7 +98,8 @@ int IR_test(void)
 	UART0_send_string("WastedCycles: ");
 	UART0_send_string_ln(buffer);
 	UART0_send_ln();
-	*/
+	
+	
 	
 	return 0;
 }
