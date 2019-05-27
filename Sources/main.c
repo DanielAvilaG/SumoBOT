@@ -116,7 +116,7 @@ int main(void)
 	/*BLED_toggle();
 	SysTick_delay(5000);
 	BLED_toggle();*/
-	//ADC0_compare_i(13, IRTHRESHHOLDG, GT);
+	ADC0_compare_i(13, IRTHRESHHOLDG, GT);
 	Test();
 	//WD5S();
 	//delayMs(CINCSEC);

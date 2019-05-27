@@ -163,11 +163,11 @@ int calibrate(void)
 			break;
 			
 		case 'w':
-			PWM_moveForward(30);
+			PWM_moveForward(30, 1);
 			break;
 			
 		case 's':
-			PWM_moveBackward(30);
+			PWM_moveBackward(30, 1);
 			break;
 			
 		case 'a':

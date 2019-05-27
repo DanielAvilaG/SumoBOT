@@ -17,6 +17,8 @@ void ADC0_IRQHandler1(void) {
 		RLED_on();
 		GLED_on();
 		//lineaBlanca = 1;
+		compare = 0;
+		ADC0_compare_i(13, IRTHRESHHOLDG, GT);
 		BLED_off();
 		RLED_off();
 		GLED_off();
@@ -28,7 +30,7 @@ void ADC0_IRQHandler1(void) {
 }
 
 
-void ADC0_IRQHandler3(void) {
+void ADC0_IRQHandler(void) {
 	if (compare) {
 		char buffer[30];
 		alertstatus = 2;
@@ -57,9 +59,9 @@ void ADC0_IRQHandler3(void) {
 			IR_Data.FrontLeft = ADC0_read_p(11);
 			IR_Data.BackLeft = ADC0_read_p(12);
 			if (IR_Data.FrontRight > IRTHRESHHOLD) {
-				PWM_moveBackward(10);
-				SysTick_delay(50);
+				PWM_moveBackward(10, 0);
 				PWM_rotateLeft(45);
+				//SysTick_delay(50);
 				itoa(IR_Data.FrontRight,buffer); 
 				UART0_send_char('\t');
 				UART0_send_string("IR_Data.FrontRight: "); 
@@ -67,9 +69,9 @@ void ADC0_IRQHandler3(void) {
 				found = 1;
 			}
 			else if (IR_Data.FrontLeft > IRTHRESHHOLD) {
-				PWM_moveBackward(10);
-				SysTick_delay(50);
+				PWM_moveBackward(10, 0);
 				PWM_rotateRight(45);
+				//SysTick_delay(50);
 				itoa(IR_Data.FrontLeft,buffer); 
 				UART0_send_char('\t');
 				UART0_send_string("IR_Data.FrontLeft: "); 
@@ -77,9 +79,9 @@ void ADC0_IRQHandler3(void) {
 				found = 1;
 			}
 			else if (IR_Data.BackRight > IRTHRESHHOLD) {
-				PWM_moveForward(10);
-				SysTick_delay(50);
+				PWM_moveForward(10, 0);
 				PWM_rotateLeft(45);
+				//SysTick_delay(50);
 				itoa(IR_Data.BackRight,buffer); 
 				UART0_send_char('\t');
 				UART0_send_string("IR_Data.BackRight: "); 
@@ -87,9 +89,9 @@ void ADC0_IRQHandler3(void) {
 				found = 1;
 			}
 			else if (IR_Data.BackLeft > IRTHRESHHOLD) {
-				PWM_moveForward(10);
-				SysTick_delay(50);
+				PWM_moveForward(10, 0);
 				PWM_rotateRight(45);
+				//SysTick_delay(50);
 				itoa(IR_Data.BackLeft,buffer); 
 				UART0_send_char('\t');
 				UART0_send_string("IR_Data.BackLeft: "); 
@@ -98,9 +100,9 @@ void ADC0_IRQHandler3(void) {
 			}
 		}
 
-		SysTick_delay(100);
+		//SysTick_delay(100);
 		
-		WD5S();
+		//WD5S();
 		alertstatus = 0;
 		compare = 0;
 		ADC0_compare_i(13, IRTHRESHHOLDG, GT);

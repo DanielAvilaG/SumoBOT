@@ -67,17 +67,27 @@ void PWM_duty(int motor1, int motor2){
 	}
 }
 
-void PWM_moveForward(int cm)
+void PWM_moveForward(int cm, int source)
 {
 	PWM_duty(-BACKWARD,-BACKWARD);
-	SysTick_delay(1000*(cm/VEL_FORWARD));
+	if (source)
+		SysTick_delay(1000*(cm/VEL_FORWARD));
+	else
+	{
+		delayMsinter(30);
+	}
 	PWM_duty(STOP,STOP);
 }
 
-void PWM_moveBackward(int cm)
+void PWM_moveBackward(int cm, int source)
 {
 	PWM_duty(BACKWARD,BACKWARD);
-	SysTick_delay(1000*(cm/VEL_BACKWARD));
+	if (source)
+		SysTick_delay(1000*(cm/VEL_BACKWARD));
+	else
+	{
+		delayMsinter(30);
+	}
 	PWM_duty(STOP,STOP);
 }
 

@@ -54,7 +54,7 @@ void brain_step()
 		RLED_on();
 		if (cm_Front<PUSHTHRESHHOLD)
 		{
-			PWM_moveForward(5); // El de alante no va bien..
+			PWM_moveForward(5, 1); // El de alante no va bien..
 			SysTick_delay(100);
 			sprintf(buffer,"HC davanter menor que PUSH: %d", cm_Front);
 			UART0_send_string_ln(buffer);
@@ -63,7 +63,7 @@ void brain_step()
 		{
 			PWM_rotateLeft(120);
 			SysTick_delay(100);
-			PWM_moveForward(RANGE/2);
+			PWM_moveForward(RANGE/2, 1);
 			sprintf(buffer,"HC esquerra menor que PUSH: %d", cm_Left);
 			UART0_send_string_ln(buffer);
 		}
@@ -71,7 +71,7 @@ void brain_step()
 		{
 			PWM_rotateRight(120);
 			SysTick_delay(100);
-			PWM_moveForward(RANGE/2);
+			PWM_moveForward(RANGE/2, 1);
 			sprintf(buffer,"HC dreta menor que PUSH: %d", cm_Right);
 			UART0_send_string_ln(buffer);
 		}
@@ -89,7 +89,7 @@ void brain_step()
 		{
 			PWM_rotateLeft(120);
 			SysTick_delay(100);
-			PWM_moveForward(RANGE/5);
+			PWM_moveForward(RANGE/5, 1);
 			sprintf(buffer,"HC esquerra menor que RANGE: %d", cm_Left);
 			UART0_send_string_ln(buffer);
 		}
@@ -97,13 +97,13 @@ void brain_step()
 		{
 			PWM_rotateRight(120);
 			SysTick_delay(100);
-			PWM_moveForward(RANGE/5);
+			PWM_moveForward(RANGE/5, 1);
 			sprintf(buffer,"HC dreta menor que RANGE: %d", cm_Right);
 			UART0_send_string_ln(buffer);
 		}
 		else if (cm_Front<RANGE/2) // El de alante no va bien, lo pongo el ultimo y le reduzco distancia
 		{
-			PWM_moveForward(RANGE/5);
+			PWM_moveForward(RANGE/5, 1);
 			SysTick_delay(100);
 			sprintf(buffer,"HC davanter menor que RANGE: %d", cm_Front);
 			UART0_send_string_ln(buffer);
@@ -122,7 +122,7 @@ void brain_step()
 			PWM_rotateRight(15); //dreta
 			SysTick_delay(100);
 		}else{
-			PWM_moveForward(15);
+			PWM_moveForward(15, 1);
 			SysTick_delay(100);
 		}
 		
