@@ -74,7 +74,7 @@ void PWM_moveForward(int cm, int source)
 		SysTick_delay(1000*(cm/VEL_FORWARD));
 	else
 	{
-		delayMsinter(30);
+		delayMsinter(1000*(cm/VEL_FORWARD));
 	}
 	PWM_duty(STOP,STOP);
 }
@@ -86,7 +86,7 @@ void PWM_moveBackward(int cm, int source)
 		SysTick_delay(1000*(cm/VEL_BACKWARD));
 	else
 	{
-		delayMsinter(30);
+		delayMsinter(1000*(cm/VEL_BACKWARD));
 	}
 	PWM_duty(STOP,STOP);
 }
@@ -99,6 +99,20 @@ void PWM_rotateLeft(int degree)
 }
 
 void PWM_rotateRight(int degree)
+{
+	PWM_duty(-ROTATION,ROTATION);
+	delayMsinter((degree*1000)/VEL_RIGHT);
+	PWM_duty(STOP,STOP);
+}
+
+void PWM_rotateLeft1(int degree)
+{
+	PWM_duty(ROTATION,-ROTATION);
+	delayMsinter((degree*1000)/VEL_LEFT);
+	PWM_duty(STOP,STOP);
+}
+
+void PWM_rotateRight1(int degree)
 {
 	PWM_duty(-ROTATION,ROTATION);
 	SysTick_delay((degree*1000)/VEL_RIGHT);

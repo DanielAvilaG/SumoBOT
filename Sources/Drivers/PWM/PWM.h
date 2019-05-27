@@ -11,5 +11,7 @@ void PWM_moveForward(int, int);
 void PWM_moveBackward(int, int);
 void PWM_rotateLeft(int);
 void PWM_rotateRight(int);
+void PWM_rotateLeft1(int);
+void PWM_rotateRight1(int);
 
 #endif /* PWM_H_ */

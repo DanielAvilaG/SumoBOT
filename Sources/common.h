@@ -52,11 +52,11 @@
 #define IRTHRESHHOLDG 25000
 
 #define ROTATION 16000
-#define BACKWARD 10000
-#define VEL_FORWARD 21.5 // cm/s
-#define VEL_BACKWARD 17 // cm/s
-#define VEL_RIGHT 190.00 // grados/s
-#define VEL_LEFT 177.00 // grados/s
+#define BACKWARD 17000
+#define VEL_FORWARD 30 // cm/s
+#define VEL_BACKWARD 30 // cm/s
+#define VEL_RIGHT 250.00 // grados/s
+#define VEL_LEFT 250.00 // grados/s
 #define STOP 100
 
 

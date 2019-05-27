@@ -28,22 +28,19 @@ void calibrateForward()
 		BLED_on();
 		GLED_on();
 		
-		ADC0_read_i(8);
-		while(reading){};
-		res8 = res;
+		res8 = ADC0_read_p(8);
 		itoa(res8,buffer); 
 		UART0_send_char('\t');
 		UART0_send_string("Sensor davant dreta (PTB0): "); //Davant dreta
 		UART0_send_string_ln(buffer);
 			
-		ADC0_read_i(11);
-		while(reading){};
-		res11 = res;
+		res11 = ADC0_read_p(11);
 		itoa(res11,buffer); 
 		UART0_send_char('\t');
 		UART0_send_string("Sensor Davant esquerra (PTB3): "); //Davant esquerra
 		UART0_send_string_ln(buffer);
 	}
+	PWM_duty(STOP,STOP);
 	SYST_CSR = 0;
 	ticks = SYST_CVR;
 	ticks = SYST_RVR - ticks;
@@ -84,23 +81,20 @@ void calibrateBackward()
 		BLED_on();
 		GLED_on();
 			
-		ADC0_read_i(9);
-		while(reading);
-		res9 = res;
+		res9 = ADC0_read_p(9);
 		itoa(res9,buffer); 
 		UART0_send_char('\t');
 		UART0_send_string("Sensor Darrera dreta (PTB1): "); //Darrera dreta
 		UART0_send_string_ln(buffer);
 	
-		ADC0_read_i(12);
-		while(reading);
-		res12 = res;
+		res12 = ADC0_read_p(12);
 		delayMs(100);
 		itoa(res12,buffer); 
 		UART0_send_char('\t');
 		UART0_send_string("Sensor Darrera esquerra (PTB2): "); //Darrera esquerra
 		UART0_send_string_ln(buffer);
 	}
+	PWM_duty(STOP,STOP);
 	SYST_CSR = 0;
 	ticks = SYST_CVR;
 	ticks = SYST_RVR - ticks;
