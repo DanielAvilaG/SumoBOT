@@ -26,23 +26,40 @@ void delayMs(int n) {
 		
 		//for (j = 0; j < 7000; j++) {}
 }
-/**
- * Función wathdog, cada vez que se llama pone un temporizador durante los segundos
- * pasados por parámetro; si la cuenta llega 0 sin que se haya vuelto a llamar se ejecuta la 
- * ISR SysTick_Handler(void)
- */
-void WD_touch(int seconds)
-{
-	SYST_CSR = 0; // Disable Systick
-	SYST_CVR = (1310624*seconds)-1;
-	// Systick 20.97 MHz
-	SYST_RVR = (1310624*seconds)-1; 
-	SYST_CSR = 3; // Enable Systick, Clock Source 20.97/16 = 1310625 Hz, Enable Interrupts
+
+void delayMS(int n) {
+	int i;
+	//int j;
+	for(i = 0 ; i < n*MS; i++){
+		if(alertstatus>0){
+			return;
+		}
+	}
+		
+		//for (j = 0; j < 7000; j++) {}
 }
 
+
+
+void SysTick_delay(int ms)
+{
+	SYST_CSR = 0; // Disable Systick
+	SYST_CVR = (1310*ms)-1;
+	// Systick 20.97 MHz
+	SYST_RVR = (1310*ms)-1; 
+	//SYST_CSR = 3; // Enable Systick, Clock Source 20.97/16 = 1310625 Hz, Enable Interrupts
+	SYST_CSR = 1; // Enable Systick, Clock Source 20.97/16 = 1310625 Hz, NO Interrupts
+	while(!(SYST_CSR & 0x10000)); /*wait until the Count flag is set */
+	SYST_CSR = 0; /*Stop the timer (Enable = 0) */
+}
+
+/*
 void SysTick_Handler(void) {
-	RLED_toggle();
-	BLED_toggle();
+	//BLED_toggle();
+	
+	BLED_off();
+	GLED_on();
+	RLED_off();
 	if (alertstatus<2){
 		alertstatus = 1;
 		alert = 1;
@@ -55,16 +72,21 @@ void SysTick_Handler(void) {
 		alert = 0;
 		WD_touch(5);
 	}
-	RLED_toggle();
-	BLED_toggle();
-}
+	//RLED_toggle();
+	//BLED_toggle();
+	 
+}*/
+
 
 volatile int wd = WD(WD_5S); // 5000/60 = 83.3 --> 83*60=4980 ms
-void TPM0_IRQHandler(void) {
+void WD5S(void) {
+	
 	if (!wd) {
-		//BLED_toggle();
+		//RLED_toggle();
+		
 		wd = WD(WD_5S);
-		/*if (alertstatus!=2){
+		/*
+		if (alertstatus!=2){
 			alertstatus = 1;
 			PWM_duty(-20000,20000);//dreta
 			delayMs(105);
@@ -73,16 +95,19 @@ void TPM0_IRQHandler(void) {
 			PWM_duty(0,0);
 			wd = WD(WD_5S);
 			alertstatus = 0;
-		}*/
+		}
+		*/
 	}
 	
 	--wd;
 	TPM0_SC |= TPM_SC_TOF_MASK;
+	
 }
+
 
 /**
  * Función wathdog, fija a 4,98 segundos; si la cuenta llega 0 sin que se haya vuelto a llamar se ejecuta la 
- * ISR TPM0_IRQHandler(void)
+ * ISR FTM0_IRQHandler(void) deifina en HC.c
  */
 void WD5S_touch()
 {

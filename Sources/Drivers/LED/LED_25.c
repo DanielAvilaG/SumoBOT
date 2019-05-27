@@ -38,9 +38,19 @@ void BLED_init(void)
 
 void RLED_toggle(void)
 {
-	// GPIOE_PTOR |= (1 << 29); // kl46
 	GPIOB_PTOR |= (1 << 18);
 }
+
+void RLED_off(void)
+{
+	GPIOB_PDOR |= (1 << 18);
+}
+
+void RLED_on(void)
+{
+	GPIOB_PCOR |= (1 << 18);
+}
+
 
 void GLED_toggle(void)
 {
@@ -49,8 +59,14 @@ void GLED_toggle(void)
 
 void GLED_off(void)
 {
-
+	GPIOB_PDOR |= (1 << 19);
 }
+
+void GLED_on(void)
+{
+	GPIOB_PCOR |= (1 << 19);
+}
+
 
 void BLED_toggle(void)
 {

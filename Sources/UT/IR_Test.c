@@ -9,9 +9,9 @@
 
 int IR_test(void)
 {
-	short int result[5]={0};
+	unsigned short result[5]={0};
 	int wastedCycles = 0;
-	char buffer[10];
+	char buffer[30];
 	
 	UART0_send_string_ln("Start IR test:");
 	
@@ -58,7 +58,7 @@ int IR_test(void)
 	wastedCycles = 0;
 	
 	//if (result[4] > 150) return 1;
-	
+	/*
 	UART0_send_string_ln("Continus test 200");
 	
 	ADC0_compare_i(13, IRTHRESHHOLDG, GT);
@@ -75,25 +75,25 @@ int IR_test(void)
 	UART0_send_string_ln(buffer);
 	
 	itoa(IR_Data.BackRight,buffer); 
-		UART0_send_char('\t');
-		UART0_send_string("BackRight: ");
-		UART0_send_string_ln(buffer);
+	UART0_send_char('\t');
+	UART0_send_string("BackRight: ");
+	UART0_send_string_ln(buffer);
 		
-		itoa(IR_Data.FrontLeft,buffer); 
-			UART0_send_char('\t');
-			UART0_send_string("FrontLeft: ");
-			UART0_send_string_ln(buffer);
-			
-			itoa(IR_Data.BackLeft,buffer); 
-				UART0_send_char('\t');
-				UART0_send_string("BackLeft: ");
-				UART0_send_string_ln(buffer);
-	
+	itoa(IR_Data.FrontLeft,buffer); 
+	UART0_send_char('\t');
+	UART0_send_string("FrontLeft: ");
+	UART0_send_string_ln(buffer);
+		
+	itoa(IR_Data.BackLeft,buffer); 
+	UART0_send_char('\t');
+	UART0_send_string("BackLeft: ");
+	UART0_send_string_ln(buffer);
+
 	itoa(wastedCycles,buffer);
 	UART0_send_string("WastedCycles: ");
 	UART0_send_string_ln(buffer);
 	UART0_send_ln();
-	
+	*/
 	
 	return 0;
 }

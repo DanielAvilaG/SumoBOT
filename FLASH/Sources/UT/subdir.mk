@@ -44,7 +44,7 @@ OBJS_OS_FORMAT += \
 # Each subdirectory must supply rules for building sources it contributes
 Sources/UT/HC_Test.o: ../Sources/UT/HC_Test.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #4 $<'
+	@echo 'Executing target #7 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/UT/HC_Test.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/UT/HC_Test.o"
 	@echo 'Finished building: $<'
@@ -52,7 +52,7 @@ Sources/UT/HC_Test.o: ../Sources/UT/HC_Test.c
 
 Sources/UT/IR_Test.o: ../Sources/UT/IR_Test.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #5 $<'
+	@echo 'Executing target #8 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/UT/IR_Test.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/UT/IR_Test.o"
 	@echo 'Finished building: $<'
@@ -60,7 +60,7 @@ Sources/UT/IR_Test.o: ../Sources/UT/IR_Test.c
 
 Sources/UT/PWM_Test.o: ../Sources/UT/PWM_Test.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #6 $<'
+	@echo 'Executing target #9 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/UT/PWM_Test.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/UT/PWM_Test.o"
 	@echo 'Finished building: $<'

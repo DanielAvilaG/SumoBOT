@@ -10,15 +10,30 @@
 
 #include "MKL25Z4.h"
 #include "Drivers/LED/LED_25.h"
+#include "Drivers/UART/UART.h"
+#include "Drivers/ADC/ADC_I.h"
+//#include "Drivers/LED/LED_46.h"
+#include "Drivers/LED/LED_25.h"
+#include "Drivers/PWM/PWM.h"
+
+#include "UT/IR_Test.h"
+#include "UT/HC_Test.h"
+#include "UT/PWM_Test.h"
+
+#include "combat.h"
+#include "brain.h"
+#include "calibrate.h"
+
+#include <stdio.h>
 
 #define HC_TPM0_MOD 60	// ms
 #define WD(ms)	((int)(((int)(ms))/HC_TPM0_MOD))
 #define WD_5S	5000 	// 5 seg
 
-
+// NIL
 #define DELAY90ESQUERRA 135
 #define DELAY120ESQUERRA 180
-#define VELOCITAT 0.16
+#define VELOCITAT 0.16 
 #define DELAY90DRETA 158
 #define DELAY120DRETA 210
 #define MOVIMENT 100
@@ -27,12 +42,22 @@
 
 #define MAXGIR 180
 #define GIRINICIAL 1
+#define RANGE 30
+#define PUSHTHRESHHOLD 10
 
 
 #define MSINTER 7000
 
-#define IRTHRESHHOLD 300
-#define IRTHRESHHOLDG 200
+#define IRTHRESHHOLD 30000
+#define IRTHRESHHOLDG 25000
+
+#define ROTATION 16000
+#define BACKWARD 10000
+#define VEL_FORWARD 21.5 // cm/s
+#define VEL_BACKWARD 17 // cm/s
+#define VEL_RIGHT 190.00 // grados/s
+#define VEL_LEFT 177.00 // grados/s
+#define STOP 100
 
 
 
@@ -48,9 +73,11 @@
 
 
 void delayMs(int);
-void WD_touch(int);
+//void WD_touch(int);
 void WD5S_touch(void);
-void SysTick_Handler(void);
+void WD5S(void);
+void delayMsinter(int);
+void SysTick_delay(int);
 
 
 volatile int alertstatus;
