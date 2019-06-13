@@ -66,14 +66,7 @@
 #define CINCSEC 1500 
 
 
-
-#define DELAYCERCLE 23.333
-#define MSPERCM 700/9 //gir
-#define MSDEMENYS10 111.11111
-
-
 void delayMs(int);
-//void WD_touch(int);
 void WD5S_touch(void);
 void WD5S(void);
 void delayMsinter(int);
@@ -85,20 +78,7 @@ volatile int alert;
 volatile int orientacio;
 volatile char state, nextstate;
 
-struct mapa{
-	char mapa[77][77];
-	int ultimaposicioX;
-	int ultimaposicioY;
-	int ultimaposicioENEX;
-	int ultimaposicioENEY;
-};
-typedef struct mapa mapa1;
-mapa1 mapa2;
-/** TODO
- * Nil necesita una función que se ejecute cada 5 segundos, que vaya con otra que cuando se llame actue como watchdog reiniciando los 5 segundos
- * Y otra función que al llamarla se le pase como argumento un tiempo y 
- * sin bloquear te interrumpa cuando transcurra ese tiempo. Si se llama otra vez antes de la interrupción programada debería reestablecer el contandor anulando la primera llamada.
- */
+
 
 
 

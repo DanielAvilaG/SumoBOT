@@ -5,7 +5,7 @@
  *      Author: Dani
  */
 #include "combat.h"
-
+/*
 void ajustarangledreta(){
 	PWM_duty(-20000,20000);
 	orientacio = orientacio -120;
@@ -284,7 +284,7 @@ void combat(){
 					GLED_toggle();
 					break;
 				
-					/*    
+					   
 					if (random>2){//endavant
 						PWM_duty(-20000,-17500);//endavant
 						WD5S();
@@ -368,7 +368,7 @@ void combat(){
 					}
 					*/
 					
-					 
+					 /*
 				default: //per si de cas, torna al estat de sensing si hi ha estat desconegut
 					state='s', nextstate='s';
 					break;
@@ -377,3 +377,4 @@ void combat(){
 		}
 	}
 }
+*/
