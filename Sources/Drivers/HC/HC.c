@@ -14,6 +14,7 @@ void HC_init()
 	SIM_BASE_PTR->SCGC6 |= SIM_SCGC6_TPM0_MASK;  // ENABLE TPM0 CLOCK GATE
 	SIM_BASE_PTR->SOPT2 |= SIM_SOPT2_TPMSRC(3);  // MCGIRCLK IS SELECTED FOR TPM CLOCK
 	TPM0_BASE_PTR->SC = 0;
+	TPM0_SC |= TPM_SC_TOIE_MASK;
 	TPM0_BASE_PTR->SC |= TPM_SC_PS(1);  // * especificar frequencia
 	TPM0_BASE_PTR->SC |= TPM_SC_CMOD(1);  // COUNTER INC. ON EVERY CLOCK
 	TPM0_BASE_PTR->MOD = HC_TPM0_MOD*1000;  // * especificar periodo 60 ms
@@ -56,22 +57,32 @@ void FTM0_IRQHandler(void) {
 	{ // INT PTA5 TPM0 CHANNEL 2
 		then_PTA5 = now_PTA5;
 		now_PTA5 = TPM0_C2V;
-		cm_PTA5 = (now_PTA5 - then_PTA5) / 58;
+		int cm = (now_PTA5 - then_PTA5) / 58;
+		if (cm >0 )
+			cm_PTA5 = cm;
 		TPM0_C2SC |= 0x80; // clear CHF
 	}
 	else if (TPM0_STATUS & (1<<4))
 	{ // INT PTC8 TPM0 CHANNEL 4
 		then_PTC8 = now_PTC8;
 		now_PTC8 = TPM0_C4V;
-		cm_PTC8 = (now_PTC8 - then_PTC8) / 58;
+		int cm = (now_PTC8 - then_PTC8) / 58;
+		if (cm >0 )
+			cm_PTC8 = cm;
 		TPM0_C4SC |= 0x80; // clear CHF
 	}
 	else if (TPM0_STATUS & (1<<5))
 	{ // INT PTC9 TPM0 CHANNEL 5
 		then_PTC9 = now_PTC9;
 		now_PTC9 = TPM0_C5V;
-		cm_PTC9 = (now_PTC9 - then_PTC9) / 58;
+		int cm = (now_PTC9 - then_PTC9) / 58;
+		if (cm >0 )
+			cm_PTC9 = cm;
 		TPM0_C5SC |= 0x80; // clear CHF
+	}
+	else // Fin de ciclo
+	{
+		WD5S(); // 
 	}
 }
 

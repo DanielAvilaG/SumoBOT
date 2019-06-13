@@ -26,7 +26,7 @@ void ADC0_init_p(void)
 
 	// Configure ADC
 	ADC0_CFG1 = 0; // Reset register
-	ADC0_CFG1 |= (ADC_CFG1_MODE(2)  |  	// 10 bits mode
+	ADC0_CFG1 |= (ADC_CFG1_MODE(3)  |  	// 10 bits mode
 				  ADC_CFG1_ADICLK(0)|	// Input Bus Clock (20-25 MHz out of reset (FEI mode))
 				  ADC_CFG1_ADIV(2)) ;	// Clock divide by 2 (10-12.5 MHz)
 		

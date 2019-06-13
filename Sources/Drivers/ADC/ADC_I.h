@@ -11,6 +11,8 @@
 #include "derivative.h" /* include peripheral declarations */
 #include "ADC_P.h"
 
+#include "../../common.h"
+
 
 #define LT 0
 #define GT 1
@@ -18,11 +20,11 @@
 unsigned short res, reading, compare;
 
 typedef struct IR {
-	short int FrontRight; 
-	short int FrontLeft;
-	short int BackRight;
-	short int BackLeft;
-	short int General;
+	unsigned short FrontRight; 
+	unsigned short FrontLeft;
+	unsigned short BackRight;
+	unsigned short BackLeft;
+	unsigned short General;
 } volatile IR;
 
 IR IR_Data;

@@ -12,10 +12,13 @@
 
 void RLED_init(void);
 void RLED_toggle(void);
+void RLED_off(void);
+void RLED_on(void);
 
 void GLED_init(void);
 void GLED_toggle(void);
 void GLED_off(void);
+void GLED_on(void);
 
 void BLED_init(void);
 void BLED_toggle(void);
